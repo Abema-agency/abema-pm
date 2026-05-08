@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { CheckCircle, Bot, BarChart3, Shield, Zap, Users, AlertTriangle } from 'lucide-react'
 
 export const metadata = {
@@ -8,22 +7,35 @@ export const metadata = {
   description: 'Contrairement à Asana ou Monday, Abema PM est bâti sur le référentiel PMBOK 8. Tailoring engine, copilote IA, matrice risques, registre parties prenantes.',
 }
 
+function LogoMark({ className = '' }: { className?: string }) {
+  return (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className={className}>
+      <rect width="32" height="32" rx="8" fill="#F59E0B" />
+      <path d="M16 7 L8 25 M16 7 L24 25 M11.5 19 L20.5 19" stroke="#0A0A0F" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col" style={{ background: '#0A0A0F', color: '#C4BAA6', fontFamily: 'Mulish, sans-serif' }}>
+
       {/* Nav */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
+      <header className="sticky top-0 z-50 border-b" style={{ background: 'rgba(10,10,15,0.96)', backdropFilter: 'blur(16px)', borderColor: 'rgba(240,235,224,0.08)' }}>
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold">
-            <span className="text-blue-600">Abema</span> PM
+          <Link href="/" className="flex items-center gap-2.5">
+            <LogoMark />
+            <span style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", fontWeight: 900, fontSize: '1.2rem', letterSpacing: '0.05em', color: '#F0EBE0' }}>
+              ABEMA <span style={{ color: '#F59E0B' }}>PM</span>
+            </span>
           </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
-            <Link href="/#fonctionnalites" className="hover:text-slate-900 transition-colors">Fonctionnalités</Link>
-            <Link href="/#personas" className="hover:text-slate-900 transition-colors">Pour qui ?</Link>
-            <Link href="/pricing" className="hover:text-slate-900 transition-colors">Tarifs</Link>
+          <nav className="hidden md:flex items-center gap-6 text-sm" style={{ color: '#C4BAA6' }}>
+            <Link href="/#fonctionnalites" className="hover:text-white transition-colors" style={{ color: '#C4BAA6' }}>Fonctionnalités</Link>
+            <Link href="/#personas" className="hover:text-white transition-colors" style={{ color: '#C4BAA6' }}>Pour qui ?</Link>
+            <Link href="/pricing" className="hover:text-white transition-colors" style={{ color: '#C4BAA6' }}>Tarifs</Link>
           </nav>
           <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm" asChild>
+            <Button variant="ghost" size="sm" asChild className="text-brand-sand hover:text-brand-cream">
               <Link href="/login">Connexion</Link>
             </Button>
             <Button size="sm" asChild>
@@ -34,46 +46,53 @@ export default function Home() {
       </header>
 
       <main className="flex-1">
+
         {/* Hero */}
-        <section className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950 text-white py-24 px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-4 bg-blue-600/20 text-blue-300 border-blue-600/30 text-xs px-3 py-1">
+        <section className="relative py-28 px-4 overflow-hidden" style={{ background: '#0A0A0F', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
+          {/* Amber glow */}
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 75% 55% at 50% 40%, rgba(245,158,11,0.07) 0%, transparent 65%)' }} />
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 35% 25% at 82% 72%, rgba(59,130,246,0.04) 0%, transparent 60%)' }} />
+
+          <div className="relative z-10 max-w-4xl mx-auto text-center w-full">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-6 border" style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B', borderColor: 'rgba(245,158,11,0.25)' }}>
               Bâti sur PMBOK 8 · Nov 2025
-            </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold leading-tight mb-6">
+            </div>
+            <h1 className="text-5xl md:text-6xl font-black leading-tight mb-6" style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", color: '#F0EBE0', letterSpacing: '0.01em' }}>
               L&apos;outil de gestion de projet<br />
-              <span className="text-blue-400">avec un copilote IA PMBOK 8</span>
+              <span style={{ color: '#F59E0B' }}>avec un copilote IA PMBOK 8</span>
             </h1>
-            <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
+            <p className="text-lg max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: '#C4BAA6' }}>
               Contrairement à Asana ou Monday, Abema PM est bâti sur le référentiel PMBOK 8.
-              Il adapte automatiquement votre approche (prédictif/agile/hybride) et génère vos artefacts PM essentiels.
+              Il adapte automatiquement votre approche et génère vos artefacts PM essentiels.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-500 text-white px-8" asChild>
+              <Button size="lg" className="px-10 font-bold text-base" asChild>
                 <Link href="/signup">Commencer gratuitement</Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-slate-600 text-slate-300 hover:bg-slate-700" asChild>
+              <Button size="lg" variant="outline" className="px-10 font-bold text-base border-white/20 text-brand-sand hover:bg-white/5 hover:text-brand-cream" asChild>
                 <Link href="/login">Se connecter</Link>
               </Button>
             </div>
-            <p className="text-xs text-slate-500 mt-4">Gratuit pour toujours · Sans carte bancaire · Données EU Frankfurt</p>
+            <p className="text-xs mt-4" style={{ color: '#8A8070' }}>Gratuit pour toujours · Sans carte bancaire · Données EU Frankfurt</p>
           </div>
         </section>
 
         {/* Comparison table */}
-        <section className="py-16 px-4 bg-white" id="fonctionnalites">
+        <section className="py-20 px-4" id="fonctionnalites" style={{ background: '#0D0D16' }}>
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl font-bold text-center text-slate-900 mb-3">Pourquoi Abema PM ?</h2>
-            <p className="text-center text-slate-500 mb-10">Ce que les autres ne font pas.</p>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+            <h2 className="text-3xl font-black text-center mb-3" style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", color: '#F0EBE0', letterSpacing: '0.03em' }}>
+              POURQUOI ABEMA PM ?
+            </h2>
+            <p className="text-center mb-10" style={{ color: '#8A8070' }}>Ce que les autres ne font pas.</p>
+            <div className="overflow-x-auto rounded-xl border" style={{ borderColor: 'rgba(240,235,224,0.06)' }}>
+              <table className="w-full text-sm" style={{ background: '#07070E' }}>
                 <thead>
-                  <tr className="border-b-2 border-slate-200">
-                    <th className="text-left py-3 px-4 text-slate-500 font-medium">Fonctionnalité</th>
-                    <th className="text-center py-3 px-4 font-bold text-blue-600">Abema PM</th>
-                    <th className="text-center py-3 px-4 text-slate-500">Asana</th>
-                    <th className="text-center py-3 px-4 text-slate-500">Monday</th>
-                    <th className="text-center py-3 px-4 text-slate-500">ClickUp</th>
+                  <tr className="border-b" style={{ borderColor: 'rgba(240,235,224,0.08)' }}>
+                    <th className="text-left py-3 px-4 font-medium" style={{ color: '#8A8070' }}>Fonctionnalité</th>
+                    <th className="text-center py-3 px-4 font-bold" style={{ color: '#F59E0B' }}>Abema PM</th>
+                    <th className="text-center py-3 px-4" style={{ color: '#8A8070' }}>Asana</th>
+                    <th className="text-center py-3 px-4" style={{ color: '#8A8070' }}>Monday</th>
+                    <th className="text-center py-3 px-4" style={{ color: '#8A8070' }}>ClickUp</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -87,13 +106,13 @@ export default function Home() {
                     ['Kanban + Liste', true, true, true, true],
                     ['Hébergement EU (RGPD)', true, false, false, false],
                   ].map(([feature, ...cols], i) => (
-                    <tr key={i} className="border-b border-slate-100">
-                      <td className="py-3 px-4 text-slate-700">{String(feature)}</td>
+                    <tr key={i} className="border-b" style={{ borderColor: 'rgba(240,235,224,0.05)' }}>
+                      <td className="py-3 px-4" style={{ color: '#C4BAA6' }}>{String(feature)}</td>
                       {cols.map((has, j) => (
                         <td key={j} className="py-3 px-4 text-center">
                           {has
-                            ? <CheckCircle className="w-4 h-4 text-green-500 mx-auto" />
-                            : <span className="text-slate-200">—</span>
+                            ? <CheckCircle className="w-4 h-4 mx-auto" style={{ color: '#22c55e' }} />
+                            : <span style={{ color: '#2a2a35' }}>—</span>
                           }
                         </td>
                       ))}
@@ -106,16 +125,18 @@ export default function Home() {
         </section>
 
         {/* Personas */}
-        <section className="py-16 px-4 bg-slate-50" id="personas">
+        <section className="py-20 px-4" id="personas" style={{ background: '#0A0A0F' }}>
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl font-bold text-center text-slate-900 mb-10">Pour qui ?</h2>
+            <h2 className="text-3xl font-black text-center mb-10" style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", color: '#F0EBE0', letterSpacing: '0.03em' }}>
+              POUR QUI ?
+            </h2>
             <div className="grid md:grid-cols-3 gap-6">
               {[
                 {
                   icon: '🔧',
                   title: 'Artisan / TPE',
                   subtitle: 'Karim, plombier',
-                  color: 'border-amber-400',
+                  borderColor: '#F59E0B',
                   benefits: [
                     'Interface mobile-first simplifiée',
                     'Vocabulaire du quotidien, pas du jargon',
@@ -127,7 +148,7 @@ export default function Home() {
                   icon: '📊',
                   title: 'Chef de projet',
                   subtitle: 'Sophie, PM certifiée',
-                  color: 'border-blue-500',
+                  borderColor: '#3B82F6',
                   benefits: [
                     'PMBOK 8 complet — tous les artefacts',
                     'Registre risques avec matrice P×I',
@@ -139,7 +160,7 @@ export default function Home() {
                   icon: '🏢',
                   title: 'Dirigeant PME',
                   subtitle: 'Jean-Marc, DG',
-                  color: 'border-green-500',
+                  borderColor: '#22c55e',
                   benefits: [
                     'Dashboard exécutif multi-projets',
                     "Statuts RAG (vert/amber/rouge) en un coup d'œil",
@@ -148,14 +169,14 @@ export default function Home() {
                   ],
                 },
               ].map((persona, i) => (
-                <div key={i} className={`bg-white rounded-xl border-t-4 ${persona.color} p-6 shadow-sm`}>
+                <div key={i} className="rounded-xl p-6 border-t-4" style={{ background: '#0D0D16', borderTopColor: persona.borderColor, borderLeft: '1px solid rgba(240,235,224,0.06)', borderRight: '1px solid rgba(240,235,224,0.06)', borderBottom: '1px solid rgba(240,235,224,0.06)' }}>
                   <div className="text-3xl mb-3">{persona.icon}</div>
-                  <h3 className="font-bold text-slate-900 text-lg">{persona.title}</h3>
-                  <p className="text-sm text-slate-500 mb-4">{persona.subtitle}</p>
+                  <h3 className="font-black text-lg mb-1" style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', sans-serif", color: '#F0EBE0', letterSpacing: '0.03em' }}>{persona.title}</h3>
+                  <p className="text-sm mb-4" style={{ color: '#8A8070' }}>{persona.subtitle}</p>
                   <ul className="space-y-2">
                     {persona.benefits.map((b, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm text-slate-700">
-                        <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
+                      <li key={j} className="flex items-start gap-2 text-sm" style={{ color: '#C4BAA6' }}>
+                        <CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#22c55e' }} />
                         {b}
                       </li>
                     ))}
@@ -166,11 +187,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Features grid */}
-        <section className="py-16 px-4 bg-white">
+        {/* Features */}
+        <section className="py-20 px-4" style={{ background: '#0D0D16' }}>
           <div className="max-w-5xl mx-auto">
-            <h2 className="text-2xl font-bold text-center text-slate-900 mb-10">Fonctionnalités clés</h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <h2 className="text-3xl font-black text-center mb-10" style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", color: '#F0EBE0', letterSpacing: '0.03em' }}>
+              FONCTIONNALITÉS CLÉS
+            </h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {[
                 { icon: Bot, title: 'Copilote IA PMBOK 8', desc: 'Posez vos questions, générez vos artefacts, obtenez des suggestions de risques — tout en contexte projet.' },
                 { icon: Zap, title: 'Tailoring Engine', desc: '5 questions → approche recommandée (prédictif/agile/hybride) avec rationale basé sur PMBOK 8.' },
@@ -179,10 +202,10 @@ export default function Home() {
                 { icon: BarChart3, title: 'Artefacts IA', desc: 'Charte projet, WBS, plan comm, leçons apprises — générés par Claude en JSON structuré.' },
                 { icon: Shield, title: 'Sécurité & RGPD', desc: 'Hébergement EU Frankfurt, RLS Supabase, données cloisonnées par organisation.' },
               ].map(({ icon: Icon, title, desc }, i) => (
-                <div key={i} className="p-5 rounded-xl border border-slate-200 hover:border-blue-200 hover:shadow-sm transition-all">
-                  <Icon className="w-8 h-8 text-blue-600 mb-3" />
-                  <h3 className="font-semibold text-slate-900 mb-2">{title}</h3>
-                  <p className="text-sm text-slate-500">{desc}</p>
+                <div key={i} className="p-5 rounded-xl transition-all group cursor-default" style={{ background: '#0A0A0F', border: '1px solid rgba(240,235,224,0.06)' }}>
+                  <Icon className="w-7 h-7 mb-3" style={{ color: '#F59E0B' }} />
+                  <h3 className="font-bold mb-2" style={{ color: '#F0EBE0' }}>{title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: '#8A8070' }}>{desc}</p>
                 </div>
               ))}
             </div>
@@ -190,24 +213,32 @@ export default function Home() {
         </section>
 
         {/* CTA */}
-        <section className="py-20 px-4 bg-blue-600 text-white text-center">
-          <h2 className="text-3xl font-bold mb-4">Prêt à structurer vos projets ?</h2>
-          <p className="text-blue-200 mb-8 max-w-lg mx-auto">
+        <section className="py-24 px-4 text-center" style={{ background: '#F59E0B' }}>
+          <h2 className="text-4xl font-black mb-4" style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", color: '#0A0A0F', letterSpacing: '0.03em' }}>
+            PRÊT À STRUCTURER VOS PROJETS ?
+          </h2>
+          <p className="mb-8 max-w-lg mx-auto" style={{ color: '#625A52' }}>
             Créez votre compte gratuit en 30 secondes. Votre premier projet est configuré en 3 minutes.
           </p>
-          <Button size="lg" className="bg-white text-blue-600 hover:bg-blue-50 px-10" asChild>
+          <Button size="lg" className="px-10 font-bold text-base" style={{ background: '#0A0A0F', color: '#F0EBE0' }} asChild>
             <Link href="/signup">Commencer gratuitement</Link>
           </Button>
         </section>
+
       </main>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-400 py-10">
+      <footer className="py-10" style={{ background: '#07070E', color: '#8A8070' }}>
         <div className="max-w-6xl mx-auto px-4 text-center text-sm">
-          <p className="mb-2">
-            <span className="text-white font-bold"><span className="text-blue-400">Abema</span> PM</span> — Gestion de projet PMBOK 8 avec IA
+          <div className="flex justify-center mb-4">
+            <LogoMark />
+          </div>
+          <p className="mb-2" style={{ color: '#C4BAA6' }}>
+            <span style={{ fontFamily: "'Big Shoulders Display', sans-serif", fontWeight: 900, letterSpacing: '0.05em', color: '#F0EBE0' }}>ABEMA</span>{' '}
+            <span style={{ color: '#F59E0B', fontWeight: 700 }}>PM</span>{' '}
+            — Gestion de projet PMBOK 8 avec IA
           </p>
-          <p>© {new Date().getFullYear()} Abema Agency · <a href="mailto:agencyabema@gmail.com" className="hover:text-white transition-colors">agencyabema@gmail.com</a></p>
+          <p>© {new Date().getFullYear()} Abema Agency · <a href="mailto:agencyabema@gmail.com" className="hover:text-white transition-colors" style={{ color: '#8A8070' }}>agencyabema@gmail.com</a></p>
         </div>
       </footer>
     </div>

@@ -7,8 +7,14 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
     <div className="min-h-screen flex flex-col">
       <header className="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold">
-            <span className="text-blue-600">Abema</span> PM
+          <Link href="/" className="flex items-center gap-2.5">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <rect width="32" height="32" rx="8" fill="#F59E0B" />
+              <path d="M16 7 L8 25 M16 7 L24 25 M11.5 19 L20.5 19" stroke="#0A0A0F" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", fontWeight: 900, fontSize: '1.1rem', letterSpacing: '0.05em', color: '#0A0A0F' }}>
+              ABEMA <span style={{ color: '#F59E0B' }}>PM</span>
+            </span>
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm text-slate-600">
             <Link href="/#fonctionnalites" className="hover:text-slate-900 transition-colors">Fonctionnalités</Link>
