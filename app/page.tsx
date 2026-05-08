@@ -238,6 +238,7 @@ export default function Home() {
             <span style={{ color: '#F59E0B', fontWeight: 700 }}>PM</span>{' '}
             — Gestion de projet PMBOK 8 avec IA
           </p>
+          <p className="mb-1">Hauts-de-France · France</p>
           <p>© {new Date().getFullYear()} Abema Agency · <a href="mailto:agencyabema@gmail.com" className="hover:text-white transition-colors" style={{ color: '#8A8070' }}>agencyabema@gmail.com</a></p>
         </div>
       </footer>
