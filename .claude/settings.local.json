@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv .doctrine ../doctrine-backup)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --import-alias=\"@/*\" --no-src-dir --yes)",
+      "Bash(echo \"EXIT_CODE: $?\")",
+      "Bash(npm install *)",
+      "Bash(npx shadcn@latest init --defaults)",
+      "Bash(NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest init --defaults)",
+      "Bash(NODE_TLS_REJECT_UNAUTHORIZED=0 npx shadcn@latest add button card input label select textarea badge avatar tabs dialog sheet dropdown-menu separator skeleton sonner --yes)",
+      "Read(//c/Users/jamilaaa/Desktop/Claude code/**)",
+      "Bash(mv doctrine-backup *)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(git init *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git config *)"
+    ]
+  }
+}
