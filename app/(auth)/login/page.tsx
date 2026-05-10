@@ -1,111 +1,78 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function LoginPage() {
   const router = useRouter()
-  const supabase = useMemo(() => createClient(), [])
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  async function handleLogin(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     setLoading(true)
-    setError(null)
+    setError('')
 
-    try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const supabase = createClient()
+    const { error } = await supabase.auth.signInWithPassword({ email, password })
 
-      if (error) {
-        setError(error.message)
-        return
-      }
-
-      // Rafraîchit les Server Components pour qu'ils voient la nouvelle session,
-      // puis redirige — le dashboard gère la redirection onboarding si besoin.
-      router.refresh()
-      router.push('/dashboard')
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur réseau. Vérifiez votre connexion.')
-    } finally {
+    if (error) {
+      setError(error.message)
       setLoading(false)
+      return
     }
-  }
 
-  async function handleGoogleLogin() {
-    try {
-      await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: { redirectTo: `${window.location.origin}/auth/callback` },
-      })
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur réseau.')
-    }
+    router.push('/dashboard')
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Connexion</CardTitle>
-        <CardDescription>Accédez à votre espace de gestion de projet</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="vous@exemple.fr"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Mot de passe</Label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Connexion...' : 'Se connecter'}
-          </Button>
-        </form>
-        <div className="relative my-4">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-slate-200" />
-          </div>
-          <div className="relative flex justify-center text-xs text-slate-500 bg-white px-2">
-            ou
-          </div>
+    <div style={{ maxWidth: 400, margin: '100px auto', padding: 24, fontFamily: 'sans-serif' }}>
+      <h1 style={{ marginBottom: 24 }}>Connexion</h1>
+
+      <form onSubmit={handleSubmit}>
+        <div style={{ marginBottom: 16 }}>
+          <label htmlFor="email" style={{ display: 'block', marginBottom: 4 }}>Email</label>
+          <input
+            id="email"
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+            style={{ width: '100%', padding: 8, fontSize: 16, boxSizing: 'border-box' }}
+          />
         </div>
-        <Button variant="outline" className="w-full" onClick={handleGoogleLogin}>
-          Continuer avec Google
-        </Button>
-      </CardContent>
-      <CardFooter className="justify-center">
-        <p className="text-sm text-slate-500">
-          Pas encore de compte ?{' '}
-          <Link href="/signup" className="text-blue-600 hover:underline font-medium">
-            Créer un compte
-          </Link>
-        </p>
-      </CardFooter>
-    </Card>
+
+        <div style={{ marginBottom: 16 }}>
+          <label htmlFor="password" style={{ display: 'block', marginBottom: 4 }}>Mot de passe</label>
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            style={{ width: '100%', padding: 8, fontSize: 16, boxSizing: 'border-box' }}
+          />
+        </div>
+
+        {error && <p style={{ color: 'red', marginBottom: 16 }}>{error}</p>}
+
+        <button
+          type="submit"
+          disabled={loading}
+          style={{ width: '100%', padding: 10, fontSize: 16, cursor: loading ? 'not-allowed' : 'pointer' }}
+        >
+          {loading ? 'Connexion...' : 'Se connecter'}
+        </button>
+      </form>
+
+      <p style={{ marginTop: 16, textAlign: 'center' }}>
+        Pas de compte ?{' '}
+        <Link href="/signup">Créer un compte</Link>
+      </p>
+    </div>
   )
 }
