@@ -36,8 +36,7 @@ export default function LoginPage() {
       }
 
       console.log('[login] OK, redirection dashboard')
-      router.refresh()
-      router.push('/dashboard')
+      window.location.href = '/dashboard'
     } catch (err) {
       console.error('[login] catch:', err)
       setError(err instanceof Error ? err.message : 'Erreur inconnue')
