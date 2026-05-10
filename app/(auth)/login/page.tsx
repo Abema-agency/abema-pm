@@ -32,16 +32,10 @@ export default function LoginPage() {
         return
       }
 
-      const { data: { user } } = await supabase.auth.getUser()
-      if (user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('onboarding_completed')
-          .eq('id', user.id)
-          .single()
-        const completed = profile && 'onboarding_completed' in profile ? (profile as { onboarding_completed: boolean }).onboarding_completed : false
-        router.push(completed ? '/dashboard' : '/onboarding')
-      }
+      // Rafraîchit les Server Components pour qu'ils voient la nouvelle session,
+      // puis redirige — le dashboard gère la redirection onboarding si besoin.
+      router.refresh()
+      router.push('/dashboard')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur réseau. Vérifiez votre connexion.')
     } finally {

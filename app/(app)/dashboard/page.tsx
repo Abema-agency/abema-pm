@@ -12,6 +12,13 @@ export default async function DashboardPage() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('onboarding_completed')
+    .eq('id', user.id)
+    .single()
+  if (!profile?.onboarding_completed) redirect('/onboarding')
+
   const { data: projects } = await supabase
     .from('projects')
     .select('*')
