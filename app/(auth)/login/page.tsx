@@ -17,16 +17,33 @@ export default function LoginPage() {
     setLoading(true)
     setError('')
 
-    const supabase = createClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    try {
+      const supabase = createClient()
 
-    if (error) {
-      setError(error.message)
+      const timeout = new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error('Délai dépassé (10s) — Supabase ne répond pas')), 10000)
+      )
+
+      const { error } = await Promise.race([
+        supabase.auth.signInWithPassword({ email, password }),
+        timeout,
+      ])
+
+      if (error) {
+        console.error('[login] Supabase error:', error)
+        setError(error.message)
+        return
+      }
+
+      console.log('[login] OK, redirection dashboard')
+      router.refresh()
+      router.push('/dashboard')
+    } catch (err) {
+      console.error('[login] catch:', err)
+      setError(err instanceof Error ? err.message : 'Erreur inconnue')
+    } finally {
       setLoading(false)
-      return
     }
-
-    router.push('/dashboard')
   }
 
   return (
