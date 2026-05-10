@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { Suspense, useMemo, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { MailCheck } from 'lucide-react'
 
-export default function CheckEmailPage() {
+function CheckEmailContent() {
   const supabase = useMemo(() => createClient(), [])
   const searchParams = useSearchParams()
   const email = searchParams.get('email') ?? ''
@@ -63,7 +63,7 @@ export default function CheckEmailPage() {
           onClick={handleResend}
           disabled={loading || !email || resent}
         >
-          {loading ? 'Envoi…' : resent ? 'Email renvoyé ✓' : 'Renvoyer l\'email de confirmation'}
+          {loading ? 'Envoi…' : resent ? 'Email renvoyé ✓' : "Renvoyer l'email de confirmation"}
         </Button>
       </CardContent>
 
@@ -73,5 +73,13 @@ export default function CheckEmailPage() {
         </Link>
       </CardFooter>
     </Card>
+  )
+}
+
+export default function CheckEmailPage() {
+  return (
+    <Suspense>
+      <CheckEmailContent />
+    </Suspense>
   )
 }
