@@ -31,7 +31,7 @@ export default function SignupPage() {
         password,
         options: {
           data: { full_name: fullName },
-          emailRedirectTo: `${window.location.origin}/onboarding`,
+          emailRedirectTo: 'https://pm.abemaagency.com/onboarding',
         },
       })
 
@@ -40,7 +40,7 @@ export default function SignupPage() {
         return
       }
 
-      router.push('/onboarding')
+      router.push(`/check-email?email=${encodeURIComponent(email)}`)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Erreur réseau. Vérifiez votre connexion.')
     } finally {
