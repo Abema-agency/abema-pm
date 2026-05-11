@@ -14,7 +14,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const body: AIChatRequest = await request.json()
+  let body: AIChatRequest
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+  }
   const { messages, projectId } = body
 
   if (!messages || !Array.isArray(messages)) {
@@ -43,13 +48,20 @@ export async function POST(request: NextRequest) {
   const systemPrompt = buildSystemPrompt(projectContext)
 
   const anthropic = getAnthropicClient()
-  const stream = await anthropic.messages.create({
-    model: AI_MODEL,
-    max_tokens: 2048,
-    system: systemPrompt,
-    messages: messages.map((m) => ({ role: m.role, content: m.content })),
-    stream: true,
-  })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let stream: any
+  try {
+    stream = await anthropic.messages.create({
+      model: AI_MODEL,
+      max_tokens: 2048,
+      system: systemPrompt,
+      messages: messages.map((m) => ({ role: m.role, content: m.content })),
+      stream: true,
+    })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Anthropic error'
+    return NextResponse.json({ error: message }, { status: 502 })
+  }
 
   // Log interaction (fire and forget, no await)
   supabase.from('ai_interactions').insert({

@@ -34,6 +34,7 @@ export default function NewProjectPage() {
   const [step, setStep] = useState(1)
   const [tailoringAnswers, setTailoringAnswers] = useState<Record<string, number>>({})
   const [loading, setLoading] = useState(false)
+  const [createError, setCreateError] = useState('')
 
   const form = useForm<Step1Data>({
     resolver: zodResolver(step1Schema),
@@ -49,8 +50,14 @@ export default function NewProjectPage() {
     if (!tailoringResult) return
 
     setLoading(true)
+    setCreateError('')
+
     const { data: { user } } = await supabase.auth.getUser()
-    if (!user) { setLoading(false); return }
+    if (!user) {
+      setLoading(false)
+      setCreateError('Session expirée. Veuillez vous reconnecter.')
+      return
+    }
 
     const { data: project, error } = await supabase
       .from('projects')
@@ -72,7 +79,12 @@ export default function NewProjectPage() {
 
     setLoading(false)
 
-    if (!error && project && 'id' in project) {
+    if (error) {
+      setCreateError(error.message)
+      return
+    }
+
+    if (project && 'id' in project) {
       router.push(`/projects/${(project as { id: string }).id}/kanban`)
     }
   }
@@ -243,6 +255,9 @@ export default function NewProjectPage() {
                 )}
               </div>
 
+              {createError && (
+                <p className="text-sm text-red-600">{createError}</p>
+              )}
               <div className="flex justify-between pt-2">
                 <Button variant="outline" onClick={() => setStep(2)}>
                   <ChevronLeft className="w-4 h-4 mr-1" /> Retour

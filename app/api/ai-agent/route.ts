@@ -49,16 +49,23 @@ export async function POST(request: NextRequest) {
   const systemPrompt = buildSystemPrompt(projectContext)
   const anthropic = getAnthropicClient()
 
-  const stream = await anthropic.messages.create({
-    model: AI_MODEL,
-    max_tokens: 2048,
-    system: systemPrompt,
-    messages: messages.map((m) => ({
-      role: m.role as 'user' | 'assistant',
-      content: m.content,
-    })),
-    stream: true,
-  })
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let stream: any
+  try {
+    stream = await anthropic.messages.create({
+      model: AI_MODEL,
+      max_tokens: 2048,
+      system: systemPrompt,
+      messages: messages.map((m) => ({
+        role: m.role as 'user' | 'assistant',
+        content: m.content,
+      })),
+      stream: true,
+    })
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Anthropic error'
+    return NextResponse.json({ error: message }, { status: 502 })
+  }
 
   // Fire-and-forget interaction log
   void supabase.from('ai_interactions').insert({

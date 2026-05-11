@@ -10,8 +10,6 @@ import { Badge } from '@/components/ui/badge'
 import { format } from 'date-fns'
 import { fr } from 'date-fns/locale'
 
-const supabase = createClient()
-
 const ARTIFACT_TYPES = [
   { value: 'project_charter', label: 'Charte de projet' },
   { value: 'risk_register', label: 'Registre des risques' },
@@ -25,6 +23,7 @@ const ARTIFACT_TYPES = [
 type Props = { projectId: string }
 
 export function ArtifactsClient({ projectId }: Props) {
+  const supabase = createClient()
   const queryClient = useQueryClient()
   const [generating, setGenerating] = useState<string | null>(null)
 
