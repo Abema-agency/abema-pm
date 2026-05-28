@@ -6,27 +6,64 @@ const PLANS = [
   {
     name: 'Lite',
     price: '0',
-    description: 'Pour démarrer et découvrir',
-    features: ['3 projets actifs', 'Kanban + Liste', 'Copilote IA (20 messages/mois)', 'Tailoring engine', 'Registre risques', 'Parties prenantes'],
+    description: 'Pour découvrir et démarrer',
+    features: [
+      '3 projets actifs',
+      'Kanban + Liste',
+      'Copilote IA (10 req/jour)',
+      'Tailoring engine PMBOK 8',
+      'Registre des risques',
+      'Parties prenantes',
+    ],
     cta: 'Commencer gratuitement',
     href: '/signup',
     highlighted: false,
   },
   {
-    name: 'Pro',
+    name: 'Solo',
     price: '29',
-    description: 'Pour les professionnels',
-    features: ['Projets illimités', 'Copilote IA illimité', 'Génération artefacts IA illimitée', 'Export PDF artefacts', 'Gantt view', 'Status reports IA', 'Support prioritaire'],
+    description: 'Pour le freelance et l\'indépendant',
+    features: [
+      '10 projets actifs',
+      'Copilote IA (50 req/jour)',
+      'Génération artefacts IA',
+      'Gantt view',
+      'Status reports IA',
+      'Export PDF artefacts',
+    ],
+    cta: 'Commencer en Solo',
+    href: '/signup?plan=solo',
+    highlighted: false,
+  },
+  {
+    name: 'Pro',
+    price: '79',
+    description: 'Pour le chef de projet professionnel',
+    features: [
+      'Projets illimités',
+      'Copilote IA (200 req/jour)',
+      'Génération artefacts illimitée',
+      'Workflows N8N automatiques',
+      'Dashboard métriques IA',
+      'Support prioritaire',
+    ],
     cta: 'Commencer en Pro',
     href: '/signup?plan=pro',
     highlighted: true,
   },
   {
-    name: 'Équipe',
-    price: '79',
+    name: 'Team',
+    price: '149',
     description: 'Pour les équipes et PME',
-    features: ['Tout le plan Pro', 'Jusqu\'à 10 membres', 'Rôles & permissions', 'Multi-projets dashboard', 'n8n webhooks', 'SSO (V2)', 'SLA 99.9%'],
-    cta: 'Contacter l\'équipe',
+    features: [
+      'Tout le plan Pro',
+      "Jusqu'à 10 membres",
+      'Rôles & permissions',
+      'Multi-projets dashboard',
+      'Rapports exécutifs hebdo (IA)',
+      'SLA 99.9%',
+    ],
+    cta: "Contacter l'équipe",
     href: 'mailto:agencyabema@gmail.com',
     highlighted: false,
   },
@@ -35,19 +72,23 @@ const PLANS = [
 export default function PricingPage() {
   return (
     <div className="py-20 px-4">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-3xl font-bold text-slate-900 mb-3">Tarifs simples et transparents</h1>
           <p className="text-slate-500">Commencez gratuitement. Passez au Pro quand vous avez besoin de plus.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {PLANS.map((plan) => (
             <div
               key={plan.name}
-              className={`rounded-xl p-6 border ${plan.highlighted ? 'border-blue-500 shadow-lg shadow-blue-100 ring-1 ring-blue-500' : 'border-slate-200'}`}
+              className={`rounded-xl p-6 border flex flex-col ${
+                plan.highlighted
+                  ? 'border-blue-500 shadow-lg shadow-blue-100 ring-1 ring-blue-500'
+                  : 'border-slate-200'
+              }`}
             >
               {plan.highlighted && (
-                <div className="text-xs font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full inline-block mb-3">
+                <div className="text-xs font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full inline-block mb-3 w-fit">
                   Recommandé
                 </div>
               )}
@@ -57,7 +98,7 @@ export default function PricingPage() {
                 {plan.price !== '0' && <span className="text-slate-500 text-sm"> /mois</span>}
               </div>
               <p className="text-sm text-slate-500 mb-6">{plan.description}</p>
-              <ul className="space-y-2.5 mb-8">
+              <ul className="space-y-2.5 mb-8 flex-1">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-2 text-sm text-slate-700">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
@@ -74,6 +115,14 @@ export default function PricingPage() {
               </Button>
             </div>
           ))}
+        </div>
+
+        <div className="mt-16 bg-slate-50 rounded-2xl p-8 text-center">
+          <h2 className="text-xl font-bold text-slate-900 mb-2">Une question sur les tarifs ?</h2>
+          <p className="text-slate-500 mb-4">Notre équipe répond en moins de 24h.</p>
+          <Button variant="outline" asChild>
+            <Link href="mailto:agencyabema@gmail.com">Nous contacter</Link>
+          </Button>
         </div>
       </div>
     </div>

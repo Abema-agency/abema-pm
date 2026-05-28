@@ -73,9 +73,9 @@ export function CopiloteDashboard({ metrics }: CopiloteDashboardProps) {
         <CardContent>
           <Badge
             className="mt-1 capitalize"
-            variant={metrics.plan === 'starter' ? 'secondary' : 'default'}
+            variant={metrics.plan === 'lite' ? 'secondary' : 'default'}
           >
-            {metrics.plan}
+            {metrics.plan.charAt(0).toUpperCase() + metrics.plan.slice(1)}
           </Badge>
         </CardContent>
       </Card>

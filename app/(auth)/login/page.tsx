@@ -1,13 +1,20 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function LoginPage({
   searchParams,
 }: {
   searchParams: Promise<{ error?: string }>
 }) {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -27,50 +34,54 @@ export default function LoginPage({
       return
     }
 
-    window.location.href = '/dashboard'
+    router.push('/dashboard')
   }
 
   return (
-    <div style={{ maxWidth: 400, margin: '100px auto', padding: 24, fontFamily: 'sans-serif' }}>
-      <h1 style={{ marginBottom: 24 }}>Connexion</h1>
-
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: 16 }}>
-          <label htmlFor="email" style={{ display: 'block', marginBottom: 4 }}>Email</label>
-          <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            autoComplete="email"
-            style={{ width: '100%', padding: 8, fontSize: 16, boxSizing: 'border-box' }}
-          />
-        </div>
-
-        <div style={{ marginBottom: 16 }}>
-          <label htmlFor="password" style={{ display: 'block', marginBottom: 4 }}>Mot de passe</label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-            autoComplete="current-password"
-            style={{ width: '100%', padding: 8, fontSize: 16, boxSizing: 'border-box' }}
-          />
-        </div>
-
-        {error && <p style={{ color: 'red', marginBottom: 16 }}>{error}</p>}
-
-        <button
-          type="submit"
-          disabled={loading}
-          style={{ width: '100%', padding: 10, fontSize: 16, cursor: loading ? 'not-allowed' : 'pointer' }}
-        >
-          {loading ? 'Connexion...' : 'Se connecter'}
-        </button>
-      </form>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Connexion</CardTitle>
+        <CardDescription>Accédez à votre espace Abema PM</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="vous@exemple.fr"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Mot de passe</Label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+            />
+          </div>
+          {error && <p className="text-sm text-red-600">{error}</p>}
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? 'Connexion...' : 'Se connecter'}
+          </Button>
+        </form>
+      </CardContent>
+      <CardFooter className="justify-center">
+        <p className="text-sm text-slate-500">
+          Pas encore de compte ?{' '}
+          <Link href="/signup" className="text-blue-600 hover:underline font-medium">
+            Créer un compte
+          </Link>
+        </p>
+      </CardFooter>
+    </Card>
   )
 }

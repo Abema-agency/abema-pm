@@ -50,7 +50,13 @@ export function ArtifactsClient({ projectId }: Props) {
       })
       if (response.ok) {
         queryClient.invalidateQueries({ queryKey: ['artifacts', projectId] })
+      } else {
+        const data = await response.json() as { error?: string }
+        throw new Error(data.error ?? `Erreur ${response.status}`)
       }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Erreur lors de la génération'
+      alert(`Erreur : ${msg}`)
     } finally {
       setGenerating(null)
     }

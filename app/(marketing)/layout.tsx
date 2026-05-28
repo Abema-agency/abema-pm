@@ -38,7 +38,12 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
             <span className="text-white font-bold"><span className="text-blue-400">Abema</span> PM</span> — Gestion de projet PMBOK 8 avec IA
           </p>
           <p className="mb-1">Hauts-de-France · France</p>
-          <p>© {new Date().getFullYear()} Abema Agency · <a href="mailto:agencyabema@gmail.com" className="hover:text-white transition-colors">agencyabema@gmail.com</a></p>
+          <p className="mb-2">© {new Date().getFullYear()} Abema Agency · <a href="mailto:agencyabema@gmail.com" className="hover:text-white transition-colors">agencyabema@gmail.com</a></p>
+          <div className="flex justify-center gap-4 text-xs text-slate-500">
+            <a href="/legal/mentions-legales" className="hover:text-slate-300 transition-colors">Mentions légales</a>
+            <a href="/legal/politique-de-confidentialite" className="hover:text-slate-300 transition-colors">Confidentialité</a>
+            <a href="/legal/cgv" className="hover:text-slate-300 transition-colors">CGV</a>
+          </div>
         </div>
       </footer>
     </div>
