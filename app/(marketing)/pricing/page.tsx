@@ -79,19 +79,28 @@ export default function PricingPage() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {PLANS.map((plan) => (
+            <div key={plan.name}>
+              {plan.highlighted && (
+                <div className="text-center mb-2">
+                  <span
+                    className="inline-block px-3 py-0.5 rounded-full text-xs font-semibold"
+                    style={{
+                      background: 'rgba(245,158,11,0.15)',
+                      color: '#F59E0B',
+                      border: '1px solid rgba(245,158,11,0.3)',
+                    }}
+                  >
+                    Recommandé
+                  </span>
+                </div>
+              )}
             <div
-              key={plan.name}
               className={`rounded-xl p-6 border flex flex-col ${
                 plan.highlighted
-                  ? 'border-blue-500 shadow-lg shadow-blue-100 ring-1 ring-blue-500'
+                  ? 'border-2 border-amber-400/60 shadow-lg shadow-amber-100/20'
                   : 'border-slate-200'
               }`}
             >
-              {plan.highlighted && (
-                <div className="text-xs font-medium text-blue-600 bg-blue-50 px-3 py-1 rounded-full inline-block mb-3 w-fit">
-                  Recommandé
-                </div>
-              )}
               <h2 className="text-xl font-bold text-slate-900">{plan.name}</h2>
               <div className="mt-2 mb-1">
                 <span className="text-3xl font-bold text-slate-900">{plan.price}€</span>
@@ -113,6 +122,7 @@ export default function PricingPage() {
               >
                 <Link href={plan.href}>{plan.cta}</Link>
               </Button>
+            </div>
             </div>
           ))}
         </div>
