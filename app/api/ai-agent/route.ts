@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
-  const { messages, projectId } = body
+  const { messages, projectId, agentId } = body
 
   if (!messages || !Array.isArray(messages) || messages.length === 0) {
     return NextResponse.json({ error: 'Messages requis' }, { status: 400 })
@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
   void supabase.from('ai_interactions').insert({
     project_id: projectId ?? null,
     user_id: user.id,
-    interaction_type: 'chat',
+    interaction_type: agentId ? `chat:${agentId}` : 'chat',
     prompt_preview: messages[messages.length - 1]?.content?.slice(0, 100) ?? '',
   })
 
