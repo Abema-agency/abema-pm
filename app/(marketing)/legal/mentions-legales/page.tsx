@@ -8,7 +8,10 @@ export default function MentionsLegalesPage() {
         <h2>Éditeur du site</h2>
         <p>
           <strong>Abema Agency</strong><br />
-          Hauts-de-France, France<br />
+          {/* TODO: Compléter SIRET et forme juridique */}
+          Forme juridique : [À COMPLÉTER — ex: Auto-entrepreneur / SASU / EURL]<br />
+          SIRET : [À COMPLÉTER]<br />
+          Adresse : Hauts-de-France, France<br />
           Email : <a href="mailto:agencyabema@gmail.com">agencyabema@gmail.com</a>
         </p>
 

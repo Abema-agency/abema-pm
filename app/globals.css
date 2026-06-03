@@ -55,6 +55,16 @@
   --color-brand-amber-dark: #D97706;
   --color-brand-blue: #3B82F6;
 
+  /* Semantic aliases */
+  --color-bg-primary: #0A0A0F;
+  --color-bg-secondary: #0D0D16;
+  --color-bg-deep: #07070E;
+  --color-brand: #F59E0B;
+  --color-brand-hover: #D97706;
+  --color-text-cream: #F0EBE0;
+  --color-text-sand: #C4BAA6;
+  --color-text-muted: #8A8070;
+
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -65,6 +75,18 @@
 }
 
 :root {
+  /* Semantic CSS custom properties */
+  --color-bg-primary: #0A0A0F;
+  --color-bg-secondary: #0D0D16;
+  --color-bg-deep: #07070E;
+  --color-brand: #F59E0B;
+  --color-brand-hover: #D97706;
+  --color-text-cream: #F0EBE0;
+  --color-text-sand: #C4BAA6;
+  --color-text-muted: #8A8070;
+  --color-border-subtle: rgba(240, 235, 224, 0.06);
+  --color-border-medium: rgba(240, 235, 224, 0.08);
+
   /* shadcn tokens — primary = amber, accent = blue */
   --background: oklch(1 0 0);
   --foreground: oklch(0.095 0.012 264);

@@ -1,49 +1,18 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, Bot, BarChart3, Shield, Zap, Users, AlertTriangle } from 'lucide-react'
+import { MarketingHeader } from '@/components/layout/MarketingHeader'
 
 export const metadata = {
   title: 'Abema PM — Gestion de projet PMBOK 8 avec IA',
   description: 'Contrairement à Asana ou Monday, Abema PM est bâti sur le référentiel PMBOK 8. Tailoring engine, copilote IA, matrice risques, registre parties prenantes.',
 }
 
-function LogoMark({ className = '' }: { className?: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className={className}>
-      <rect width="32" height="32" rx="8" fill="#F59E0B" />
-      <path d="M16 7 L8 25 M16 7 L24 25 M11.5 19 L20.5 19" stroke="#0A0A0F" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#0A0A0F', color: '#C4BAA6', fontFamily: 'Mulish, sans-serif' }}>
 
-      {/* Nav */}
-      <header className="sticky top-0 z-50 border-b" style={{ background: 'rgba(10,10,15,0.96)', backdropFilter: 'blur(16px)', borderColor: 'rgba(240,235,224,0.08)' }}>
-        <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <LogoMark />
-            <span style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", fontWeight: 900, fontSize: '1.2rem', letterSpacing: '0.05em', color: '#F0EBE0' }}>
-              ABEMA <span style={{ color: '#F59E0B' }}>PM</span>
-            </span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm" style={{ color: '#C4BAA6' }}>
-            <Link href="/#fonctionnalites" className="hover:text-white transition-colors" style={{ color: '#C4BAA6' }}>Fonctionnalités</Link>
-            <Link href="/#personas" className="hover:text-white transition-colors" style={{ color: '#C4BAA6' }}>Pour qui ?</Link>
-            <Link href="/pricing" className="hover:text-white transition-colors" style={{ color: '#C4BAA6' }}>Tarifs</Link>
-          </nav>
-          <div className="flex items-center gap-3">
-            <Button variant="ghost" size="sm" asChild className="text-brand-sand hover:text-brand-cream">
-              <Link href="/login">Connexion</Link>
-            </Button>
-            <Button size="sm" asChild>
-              <Link href="/signup">Essai gratuit</Link>
-            </Button>
-          </div>
-        </div>
-      </header>
+      <MarketingHeader />
 
       <main className="flex-1">
 
@@ -57,8 +26,11 @@ export default function Home() {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-6 border" style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B', borderColor: 'rgba(245,158,11,0.25)' }}>
               Bâti sur PMBOK 8 · Nov 2025
             </div>
-            <h1 className="text-5xl md:text-6xl font-black leading-tight mb-6" style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", color: '#F0EBE0', letterSpacing: '0.01em' }}>
-              L&apos;outil de gestion de projet<br />
+            <h1
+              className="text-5xl md:text-6xl font-black leading-tight mb-6"
+              style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", color: '#F0EBE0', letterSpacing: '0.01em', textWrap: 'balance' } as React.CSSProperties}
+            >
+              L&apos;outil de gestion de projet{' '}
               <span style={{ color: '#F59E0B' }}>avec un copilote IA PMBOK 8</span>
             </h1>
             <p className="text-lg max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: '#C4BAA6' }}>
@@ -86,6 +58,9 @@ export default function Home() {
             <p className="text-center mb-10" style={{ color: '#8A8070' }}>Ce que les autres ne font pas.</p>
             <div className="overflow-x-auto rounded-xl border" style={{ borderColor: 'rgba(240,235,224,0.06)' }}>
               <table className="w-full text-sm" style={{ background: '#07070E' }}>
+                <caption className="sr-only">
+                  Comparaison des fonctionnalités entre Abema PM, Asana, Monday et ClickUp
+                </caption>
                 <thead>
                   <tr className="border-b" style={{ borderColor: 'rgba(240,235,224,0.08)' }}>
                     <th className="text-left py-3 px-4 font-medium" style={{ color: '#8A8070' }}>Fonctionnalité</th>
@@ -110,10 +85,13 @@ export default function Home() {
                       <td className="py-3 px-4" style={{ color: '#C4BAA6' }}>{String(feature)}</td>
                       {cols.map((has, j) => (
                         <td key={j} className="py-3 px-4 text-center">
-                          {has
-                            ? <CheckCircle className="w-4 h-4 mx-auto" style={{ color: '#22c55e' }} />
-                            : <span style={{ color: '#2a2a35' }}>—</span>
-                          }
+                          {has ? (
+                            <span aria-label="Disponible">
+                              <CheckCircle aria-hidden="true" className="w-4 h-4 mx-auto" style={{ color: '#22c55e' }} />
+                            </span>
+                          ) : (
+                            <span aria-label="Non disponible" style={{ color: '#2a2a35' }}>—</span>
+                          )}
                         </td>
                       ))}
                     </tr>
@@ -176,7 +154,7 @@ export default function Home() {
                   <ul className="space-y-2">
                     {persona.benefits.map((b, j) => (
                       <li key={j} className="flex items-start gap-2 text-sm" style={{ color: '#C4BAA6' }}>
-                        <CheckCircle className="w-4 h-4 mt-0.5 shrink-0" style={{ color: '#22c55e' }} />
+                        <CheckCircle className="w-4 h-4 mt-0.5 shrink-0" aria-hidden="true" style={{ color: '#22c55e' }} />
                         {b}
                       </li>
                     ))}
@@ -203,7 +181,7 @@ export default function Home() {
                 { icon: Shield, title: 'Sécurité & RGPD', desc: 'Hébergement EU Frankfurt, RLS Supabase, données cloisonnées par organisation.' },
               ].map(({ icon: Icon, title, desc }, i) => (
                 <div key={i} className="p-5 rounded-xl transition-all group cursor-default" style={{ background: '#0A0A0F', border: '1px solid rgba(240,235,224,0.06)' }}>
-                  <Icon className="w-7 h-7 mb-3" style={{ color: '#F59E0B' }} />
+                  <Icon className="w-7 h-7 mb-3" aria-hidden="true" style={{ color: '#F59E0B' }} />
                   <h3 className="font-bold mb-2" style={{ color: '#F0EBE0' }}>{title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: '#8A8070' }}>{desc}</p>
                 </div>
@@ -231,7 +209,10 @@ export default function Home() {
       <footer className="py-10" style={{ background: '#07070E', color: '#8A8070' }}>
         <div className="max-w-6xl mx-auto px-4 text-center text-sm">
           <div className="flex justify-center mb-4">
-            <LogoMark />
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+              <rect width="32" height="32" rx="8" fill="#F59E0B" />
+              <path d="M16 7 L8 25 M16 7 L24 25 M11.5 19 L20.5 19" stroke="#0A0A0F" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </div>
           <p className="mb-2" style={{ color: '#C4BAA6' }}>
             <span style={{ fontFamily: "'Big Shoulders Display', sans-serif", fontWeight: 900, letterSpacing: '0.05em', color: '#F0EBE0' }}>ABEMA</span>{' '}
@@ -239,7 +220,12 @@ export default function Home() {
             — Gestion de projet PMBOK 8 avec IA
           </p>
           <p className="mb-1">Hauts-de-France · France</p>
-          <p>© {new Date().getFullYear()} Abema Agency · <a href="mailto:agencyabema@gmail.com" className="hover:text-white transition-colors" style={{ color: '#8A8070' }}>agencyabema@gmail.com</a></p>
+          <p className="mb-4">© {new Date().getFullYear()} Abema Agency · <a href="mailto:agencyabema@gmail.com" className="hover:text-white transition-colors" style={{ color: '#8A8070' }}>agencyabema@gmail.com</a></p>
+          <div className="flex justify-center gap-4 text-xs" style={{ color: '#8A8070' }}>
+            <Link href="/legal/mentions-legales" className="hover:text-white transition-colors">Mentions légales</Link>
+            <Link href="/legal/politique-de-confidentialite" className="hover:text-white transition-colors">Confidentialité</Link>
+            <Link href="/legal/cgv" className="hover:text-white transition-colors">CGV</Link>
+          </div>
         </div>
       </footer>
     </div>
