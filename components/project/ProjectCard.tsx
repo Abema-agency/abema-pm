@@ -4,6 +4,7 @@ import { fr } from 'date-fns/locale'
 import { Calendar, ArrowRight } from 'lucide-react'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
 import type { Project } from '@/types/project'
 
 const APPROACH_LABELS: Record<string, string> = {
@@ -26,17 +27,26 @@ const STATUS_LABELS: Record<string, string> = {
   cancelled: 'Annulé',
 }
 
-type Props = { project: Project }
+type Props = { project: Project; ragStatus?: 'red' | 'amber' | 'green' }
 
-export function ProjectCard({ project }: Props) {
+export function ProjectCard({ project, ragStatus }: Props) {
   return (
-    <Link href={`/projects/${project.id}/kanban`}>
+    <Link href={`/dashboard/projects/${project.id}`}>
       <Card className="hover:shadow-md transition-shadow cursor-pointer group h-full">
         <CardHeader className="pb-2">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2">
-              {project.name}
-            </h3>
+            <div className="flex items-center gap-2 min-w-0">
+              {ragStatus && (
+                <span className={cn('w-2 h-2 rounded-full flex-shrink-0 mt-1', {
+                  'bg-red-500': ragStatus === 'red',
+                  'bg-amber-500': ragStatus === 'amber',
+                  'bg-green-500': ragStatus === 'green',
+                })} />
+              )}
+              <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+                {project.name}
+              </h3>
+            </div>
             <Badge className={APPROACH_COLORS[project.approach] ?? 'bg-slate-100 text-slate-700'} variant="outline">
               {APPROACH_LABELS[project.approach] ?? project.approach}
             </Badge>
