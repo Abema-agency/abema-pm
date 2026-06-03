@@ -1,42 +1,39 @@
+// components/layout/AppSidebar.tsx
 'use client'
 
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
-  LayoutDashboard, FolderKanban, LayoutList, AlertTriangle,
-  Users, FileText, BarChart3, ChevronLeft, ChevronRight, LogOut, Settings
+  LayoutDashboard, Bot, BarChart3,
+  ChevronLeft, ChevronRight, LogOut, TrendingUp,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import type { Plan } from '@/types/copilote'
 
-type SidebarItem = {
-  icon: React.ElementType
-  label: string
-  href: string
-  projectOnly?: boolean
+const PLAN_LABELS: Record<Plan, string> = {
+  lite: 'Lite',
+  solo: 'Solo',
+  pro: 'Pro',
+  team: 'Team',
 }
 
-const TOP_NAV: SidebarItem[] = [
-  { icon: LayoutDashboard, label: 'Dashboard', href: '/dashboard' },
-]
-
-const PROJECT_NAV: SidebarItem[] = [
-  { icon: FolderKanban, label: 'Kanban', href: 'kanban', projectOnly: true },
-  { icon: LayoutList, label: 'Liste', href: 'list', projectOnly: true },
-  { icon: AlertTriangle, label: 'Risques', href: 'risks', projectOnly: true },
-  { icon: Users, label: 'Parties prenantes', href: 'stakeholders', projectOnly: true },
-  { icon: FileText, label: 'Artefacts', href: 'artifacts', projectOnly: true },
-  { icon: BarChart3, label: 'Rapports', href: 'reports', projectOnly: true },
-]
+const PLAN_UPGRADE: Record<Plan, string | null> = {
+  lite: 'Passer en Solo →',
+  solo: 'Passer en Pro →',
+  pro: 'Passer en Team →',
+  team: null,
+}
 
 type Props = {
+  plan?: Plan
   projectId?: string
   projectName?: string
 }
 
-export function AppSidebar({ projectId, projectName }: Props) {
+export function AppSidebar({ plan = 'lite', projectId, projectName }: Props) {
   const [collapsed, setCollapsed] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
@@ -47,10 +44,12 @@ export function AppSidebar({ projectId, projectName }: Props) {
     router.push('/login')
   }
 
+  const upgradeLabel = PLAN_UPGRADE[plan]
+
   return (
     <aside
       className={cn(
-        'flex flex-col h-full bg-slate-900 text-slate-100 transition-all duration-200',
+        'flex flex-col h-full bg-slate-900 text-slate-100 transition-all duration-200 flex-shrink-0',
         collapsed ? 'w-16' : 'w-64'
       )}
     >
@@ -68,35 +67,48 @@ export function AppSidebar({ projectId, projectName }: Props) {
         )}
       </div>
 
-      {/* Top navigation */}
+      {/* Navigation */}
       <nav className="flex-1 py-4 overflow-y-auto">
-        {TOP_NAV.map((item) => (
-          <NavItem key={item.href} item={item} pathname={pathname} collapsed={collapsed} />
-        ))}
+        <NavItem href="/dashboard" label="Dashboard" icon={LayoutDashboard} pathname={pathname} collapsed={collapsed} />
+        <NavItem href="/dashboard/copilote" label="Copilote IA" icon={Bot} pathname={pathname} collapsed={collapsed} />
+        {plan === 'team' && (
+          <NavItem href="/dashboard/reports" label="Rapports" icon={BarChart3} pathname={pathname} collapsed={collapsed} />
+        )}
 
-        {/* Project section */}
+        {/* Project sub-nav */}
+        {projectId && !collapsed && (
+          <div className="px-4 pt-4 pb-2">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider truncate">
+              {projectName ?? 'Projet'}
+            </p>
+          </div>
+        )}
         {projectId && (
           <>
-            {!collapsed && (
-              <div className="px-4 pt-4 pb-2">
-                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider truncate">
-                  {projectName ?? 'Projet'}
-                </p>
-              </div>
-            )}
-            {PROJECT_NAV.map((item) => (
-              <NavItem
-                key={item.href}
-                item={{ ...item, href: `/projects/${projectId}/${item.href}` }}
-                pathname={pathname}
-                collapsed={collapsed}
-              />
-            ))}
+            <NavItem href={`/dashboard/projects/${projectId}`} label="Tableau de bord" icon={LayoutDashboard} pathname={pathname} collapsed={collapsed} />
+            <NavItem href={`/projects/${projectId}/kanban`} label="Kanban" icon={TrendingUp} pathname={pathname} collapsed={collapsed} />
           </>
         )}
       </nav>
 
-      {/* Bottom actions */}
+      {/* Plan badge */}
+      {!collapsed && (
+        <div className="px-4 py-3 border-t border-slate-700">
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-slate-400">Plan</span>
+            <span className="text-xs font-bold text-blue-400 bg-blue-900/40 px-2 py-0.5 rounded">
+              {PLAN_LABELS[plan]}
+            </span>
+          </div>
+          {upgradeLabel && (
+            <Link href="/pricing" className="text-xs text-slate-500 hover:text-slate-300 transition-colors mt-1 block">
+              {upgradeLabel}
+            </Link>
+          )}
+        </div>
+      )}
+
+      {/* Logout */}
       <div className="border-t border-slate-700 py-2">
         <button
           onClick={handleLogout}
@@ -123,30 +135,27 @@ export function AppSidebar({ projectId, projectName }: Props) {
 }
 
 function NavItem({
-  item,
-  pathname,
-  collapsed,
+  href, label, icon: Icon, pathname, collapsed,
 }: {
-  item: SidebarItem & { href: string }
+  href: string
+  label: string
+  icon: React.ElementType
   pathname: string
   collapsed: boolean
 }) {
-  const active = pathname === item.href || pathname.startsWith(item.href + '/')
-
+  const active = pathname === href || pathname.startsWith(href + '/')
   return (
     <Link
-      href={item.href}
+      href={href}
       className={cn(
         'flex items-center gap-3 px-4 py-2.5 text-sm transition-colors',
         collapsed && 'justify-center px-0',
-        active
-          ? 'bg-blue-600 text-white'
-          : 'text-slate-400 hover:text-white hover:bg-slate-800'
+        active ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'
       )}
-      title={collapsed ? item.label : undefined}
+      title={collapsed ? label : undefined}
     >
-      <item.icon className="w-4 h-4 shrink-0" />
-      {!collapsed && item.label}
+      <Icon className="w-4 h-4 shrink-0" />
+      {!collapsed && label}
     </Link>
   )
 }
