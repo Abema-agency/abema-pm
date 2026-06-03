@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import type { Plan } from '@/types/copilote'
 import { useWorkflowTrigger } from '@/hooks/useAiAgent'
 import { Button } from '@/components/ui/button'
 import { FileText, AlertTriangle, CheckCircle, XCircle, Loader2 } from 'lucide-react'
@@ -7,10 +9,26 @@ import { toast } from 'sonner'
 
 interface WorkflowTriggersProps {
   projectId: string
+  plan?: Plan
 }
 
-export function WorkflowTriggers({ projectId }: WorkflowTriggersProps) {
+export function WorkflowTriggers({ projectId, plan: initialPlan }: WorkflowTriggersProps) {
+  const [plan, setPlan] = useState<Plan | null>(initialPlan ?? null)
   const { trigger, isLoading } = useWorkflowTrigger()
+
+  useEffect(() => {
+    // If plan is provided as prop, use it. Otherwise fetch from API.
+    if (initialPlan) {
+      setPlan(initialPlan)
+    } else {
+      fetch('/api/user/plan')
+        .then((r) => r.json())
+        .then((d: { plan: Plan }) => setPlan(d.plan))
+        .catch(() => setPlan('lite'))
+    }
+  }, [initialPlan])
+
+  if (plan !== 'team') return null
 
   async function handleStatusReport() {
     const result = await trigger('status_report', projectId)
