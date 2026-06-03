@@ -1,41 +1,44 @@
 import { redirect, notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { AppHeader } from '@/components/layout/AppHeader'
-import { CopiloteIA } from '@/components/copilote/CopiloteIA'
-import { WorkflowTriggers } from '@/components/copilote/WorkflowTriggers'
+import { ProjectDetailClient } from '@/components/dashboard/ProjectDetailClient'
+import { computeProjectMetrics } from '@/lib/dashboard/metrics'
+import type { Project, WorkPackage, Risk } from '@/types/project'
 
 interface Props {
   params: Promise<{ id: string }>
 }
 
-export default async function ProjectCopilotePage({ params }: Props) {
+export default async function ProjectDetailPage({ params }: Props) {
   const { id } = await params
   const supabase = await createClient()
+
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
   const { data: project } = await supabase
     .from('projects')
-    .select('id, name, status')
+    .select('*')
     .eq('id', id)
     .single()
 
   if (!project) notFound()
 
+  const [{ data: workPackages }, { data: risks }] = await Promise.all([
+    supabase.from('work_packages').select('*').eq('project_id', id),
+    supabase.from('risks').select('*').eq('project_id', id),
+  ])
+
+  const metrics = computeProjectMetrics(
+    project as Project,
+    (workPackages ?? []) as WorkPackage[],
+    (risks ?? []) as Risk[],
+  )
+
   return (
     <div className="flex flex-col h-full">
-      <AppHeader title={`${project.name} — Copilote`} />
-      <div className="flex flex-1 min-h-0 gap-0">
-        {/* Chat */}
-        <div className="flex-1 min-h-0 border-r">
-          <CopiloteIA projectId={project.id} />
-        </div>
-
-        {/* Sidebar workflows */}
-        <div className="w-64 flex-shrink-0 p-4 bg-slate-50">
-          <WorkflowTriggers projectId={project.id} />
-        </div>
-      </div>
+      <AppHeader title={project.name} />
+      <ProjectDetailClient project={project as Project} metrics={metrics} />
     </div>
   )
 }
