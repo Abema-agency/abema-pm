@@ -3,75 +3,152 @@ export default function PolitiqueConfidentialitePage() {
     <div className="py-16 px-4">
       <div className="max-w-3xl mx-auto prose prose-slate">
         <h1>Politique de confidentialité</h1>
-        <p className="text-slate-500 text-sm">Dernière mise à jour : mai 2026</p>
-
-        <h2>Responsable du traitement</h2>
-        <p>
-          <strong>Abema Agency</strong> — agencyabema@gmail.com<br />
-          Hauts-de-France, France
+        <p className="text-slate-500 text-sm">
+          Conforme au RGPD (Règlement UE 2016/679) et à la Loi Informatique &amp; Libertés.
+          Dernière mise à jour : juin 2026.
         </p>
 
-        <h2>Données collectées</h2>
-        <p>Nous collectons les données suivantes lors de l'utilisation d'Abema PM :</p>
+        <h2>1. Responsable du traitement</h2>
         <ul>
-          <li><strong>Données de compte</strong> : email, nom complet (lors de l'inscription)</li>
-          <li><strong>Données de projet</strong> : noms, descriptions, risques, parties prenantes que vous saisissez</li>
-          <li><strong>Données d'usage</strong> : interactions avec le copilote IA, logs d'utilisation des workflows</li>
-          <li><strong>Données techniques</strong> : adresse IP, type de navigateur (via Vercel Analytics)</li>
+          <li><strong>ABEMA AGENCY</strong> — SIREN 925 242 976</li>
+          <li>Représentée par Abdallah Ait Essaghir</li>
+          <li>25 Rue de Rouvroy, 62680 Méricourt, France</li>
+          <li>Email : <a href="mailto:contact@abemaagency.com">contact@abemaagency.com</a></li>
         </ul>
-
-        <h2>Base légale</h2>
         <p>
-          Le traitement repose sur votre <strong>consentement</strong> (lors de l'inscription)
-          et sur l'<strong>exécution du contrat</strong> de service que vous acceptez lors de la création de compte.
+          Compte tenu de la taille de la structure, ABEMA AGENCY n&apos;a pas désigné de DPO.
+          Toute demande relative à vos données peut être adressée directement à l&apos;email ci-dessus.
         </p>
 
-        <h2>Finalités du traitement</h2>
+        <h2>2. Données collectées et bases légales</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Donnée</th>
+              <th>Source</th>
+              <th>Base légale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Email, nom complet</td>
+              <td>Inscription</td>
+              <td>Consentement (art. 6.1.a)</td>
+            </tr>
+            <tr>
+              <td>Données de projet (noms, risques, parties prenantes)</td>
+              <td>Saisie utilisateur</td>
+              <td>Exécution du contrat (art. 6.1.b)</td>
+            </tr>
+            <tr>
+              <td>Interactions copilote IA</td>
+              <td>Usage de la fonctionnalité</td>
+              <td>Exécution du contrat</td>
+            </tr>
+            <tr>
+              <td>Logs techniques (IP tronquée, navigateur)</td>
+              <td>Hébergeur</td>
+              <td>Intérêt légitime — sécurité</td>
+            </tr>
+            <tr>
+              <td>Données de facturation</td>
+              <td>Plan payant</td>
+              <td>Obligation légale (art. 6.1.c)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>Aucune donnée sensible n&apos;est collectée.</p>
+
+        <h2>3. Finalités du traitement</h2>
         <ul>
           <li>Fourniture et amélioration du service Abema PM</li>
-          <li>Génération des réponses IA via l'API Anthropic</li>
-          <li>Envoi d'emails transactionnels (confirmation de compte, rapports de statut)</li>
+          <li>Génération des réponses IA via l&apos;API Anthropic (Claude)</li>
+          <li>Envoi d&apos;emails transactionnels (confirmation, rapports de statut, onboarding)</li>
           <li>Sécurité et prévention de la fraude</li>
+          <li>Respect des obligations comptables et légales</li>
         </ul>
+        <p>Vos données ne sont jamais vendues, louées ni cédées à des tiers commerciaux.</p>
 
-        <h2>Sous-traitants</h2>
+        <h2>4. Sous-traitants</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Sous-traitant</th>
+              <th>Rôle</th>
+              <th>Localisation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Supabase</td>
+              <td>Base de données et authentification</td>
+              <td>EU — Francfort, Allemagne</td>
+            </tr>
+            <tr>
+              <td>Vercel Inc.</td>
+              <td>Hébergement de l&apos;application</td>
+              <td>UE / USA — clauses contractuelles types</td>
+            </tr>
+            <tr>
+              <td>Anthropic</td>
+              <td>Modèle de langage (copilote IA)</td>
+              <td>USA — clauses contractuelles types</td>
+            </tr>
+            <tr>
+              <td>Gmail / Brevo</td>
+              <td>Envoi d&apos;emails transactionnels</td>
+              <td>UE / USA</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Pour les transferts hors UE, nous nous appuyons sur les clauses contractuelles types
+          validées par la Commission européenne.
+        </p>
+
+        <h2>5. Durées de conservation</h2>
         <ul>
-          <li><strong>Supabase</strong> — stockage base de données (EU Frankfurt)</li>
-          <li><strong>Anthropic</strong> — traitement des messages envoyés au copilote IA</li>
-          <li><strong>Vercel</strong> — hébergement de l'application</li>
-          <li><strong>Brevo</strong> — envoi d'emails transactionnels</li>
+          <li><strong>Compte actif :</strong> données conservées pendant toute la durée de l&apos;abonnement</li>
+          <li><strong>Suppression du compte :</strong> données effacées dans un délai de 30 jours</li>
+          <li><strong>Documents comptables :</strong> 10 ans (obligation légale française)</li>
+          <li><strong>Logs techniques :</strong> 12 mois maximum</li>
         </ul>
 
-        <h2>Durée de conservation</h2>
-        <p>
-          Vos données sont conservées pendant toute la durée de votre compte actif,
-          puis supprimées dans un délai de <strong>30 jours</strong> après la clôture de votre compte.
-          Les données de facturation sont conservées 10 ans conformément aux obligations légales françaises.
-        </p>
-
-        <h2>Vos droits (RGPD)</h2>
-        <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+        <h2>6. Vos droits (RGPD)</h2>
+        <p>Vous disposez à tout moment des droits suivants :</p>
         <ul>
-          <li>Droit d'accès à vos données</li>
-          <li>Droit de rectification</li>
-          <li>Droit à l'effacement (« droit à l'oubli »)</li>
-          <li>Droit à la portabilité des données</li>
-          <li>Droit d'opposition au traitement</li>
+          <li><strong>Accès :</strong> obtenir une copie de vos données</li>
+          <li><strong>Rectification :</strong> corriger des données inexactes</li>
+          <li><strong>Effacement :</strong> demander la suppression (« droit à l&apos;oubli »)</li>
+          <li><strong>Limitation :</strong> restreindre le traitement</li>
+          <li><strong>Portabilité :</strong> recevoir vos données dans un format structuré</li>
+          <li><strong>Opposition :</strong> vous opposer à un traitement fondé sur l&apos;intérêt légitime</li>
+          <li><strong>Retrait du consentement</strong> à tout moment, sans effet rétroactif</li>
         </ul>
         <p>
-          Pour exercer ces droits, contactez-nous à : <a href="mailto:agencyabema@gmail.com">agencyabema@gmail.com</a>
+          Pour exercer ces droits : <a href="mailto:contact@abemaagency.com">contact@abemaagency.com</a> (objet : « RGPD »).
+          Délai de réponse : 30 jours maximum.{' '}
+          En cas de réclamation non résolue :{' '}
+          <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener noreferrer">cnil.fr/fr/plaintes</a>
         </p>
 
-        <h2>Cookies</h2>
+        <h2>7. Cookies</h2>
         <p>
-          Abema PM utilise uniquement des cookies strictement nécessaires au fonctionnement de l'authentification
-          (session Supabase). Aucun cookie publicitaire ou de tracking tiers n'est utilisé.
+          Abema PM utilise uniquement des cookies strictement nécessaires au fonctionnement
+          de l&apos;authentification (session Supabase). Aucun cookie publicitaire ni cookie de
+          tracking tiers n&apos;est utilisé.
         </p>
 
-        <h2>Contact DPO</h2>
+        <h2>8. Sécurité</h2>
+        <ul>
+          <li>Connexion HTTPS sur l&apos;ensemble du site</li>
+          <li>Row Level Security (RLS) Supabase — données cloisonnées par organisation</li>
+          <li>Accès restreint par authentification forte</li>
+          <li>Hébergement des données en Union européenne (Francfort)</li>
+        </ul>
         <p>
-          Pour toute question relative à la protection de vos données :
-          <a href="mailto:agencyabema@gmail.com"> agencyabema@gmail.com</a>
+          En cas de violation de données, ABEMA AGENCY s&apos;engage à notifier la CNIL dans les
+          72h conformément à l&apos;article 33 du RGPD.
         </p>
       </div>
     </div>

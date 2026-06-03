@@ -18,9 +18,8 @@ export default function Home() {
 
         {/* Hero */}
         <section className="relative py-28 px-4 overflow-hidden" style={{ background: '#0A0A0F', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
-          {/* Amber glow */}
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 75% 55% at 50% 40%, rgba(245,158,11,0.07) 0%, transparent 65%)' }} />
-          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 35% 25% at 82% 72%, rgba(59,130,246,0.04) 0%, transparent 60%)' }} />
+          {/* Amber glow — atténué */}
+          <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 45% at 50% 35%, rgba(245,158,11,0.04) 0%, transparent 70%)' }} />
 
           <div className="relative z-10 max-w-4xl mx-auto text-center w-full">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-6 border" style={{ background: 'rgba(245,158,11,0.1)', color: '#F59E0B', borderColor: 'rgba(245,158,11,0.25)' }}>
@@ -179,13 +178,126 @@ export default function Home() {
                 { icon: Users, title: 'Parties prenantes PMBOK', desc: "Registre complet + matrice Pouvoir/Intérêt SVG. Attitudes et niveaux d'engagement trackés." },
                 { icon: BarChart3, title: 'Artefacts IA', desc: 'Charte projet, WBS, plan comm, leçons apprises — générés par Claude en JSON structuré.' },
                 { icon: Shield, title: 'Sécurité & RGPD', desc: 'Hébergement EU Frankfurt, RLS Supabase, données cloisonnées par organisation.' },
-              ].map(({ icon: Icon, title, desc }, i) => (
-                <div key={i} className="p-5 rounded-xl transition-all group cursor-default" style={{ background: '#0A0A0F', border: '1px solid rgba(240,235,224,0.06)' }}>
-                  <Icon className="w-7 h-7 mb-3" aria-hidden="true" style={{ color: '#F59E0B' }} />
-                  <h3 className="font-bold mb-2" style={{ color: '#F0EBE0' }}>{title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: '#8A8070' }}>{desc}</p>
+              ].map(({ icon: Icon, title, desc }, i) =>
+                i === 0 ? (
+                  <div key={i} className="p-6 rounded-xl lg:col-span-2 transition-all" style={{ background: '#0D0D16', border: '1px solid rgba(245,158,11,0.2)' }}>
+                    <Icon className="w-7 h-7 mb-3" aria-hidden="true" style={{ color: '#F59E0B' }} />
+                    <h3 className="font-bold mb-2" style={{ color: '#F0EBE0' }}>{title}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#8A8070' }}>{desc}</p>
+                    <div className="mt-4 flex items-center gap-2 text-xs font-semibold" style={{ color: '#F59E0B' }}>
+                      <span>Inclus dans tous les plans</span>
+                      <span style={{ color: 'rgba(245,158,11,0.4)' }}>·</span>
+                      <span>Modèle Claude d&apos;Anthropic</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div key={i} className="p-5 rounded-xl transition-all group cursor-default" style={{ background: '#0A0A0F', border: '1px solid rgba(240,235,224,0.06)' }}>
+                    <Icon className="w-7 h-7 mb-3" aria-hidden="true" style={{ color: '#F59E0B' }} />
+                    <h3 className="font-bold mb-2" style={{ color: '#F0EBE0' }}>{title}</h3>
+                    <p className="text-sm leading-relaxed" style={{ color: '#8A8070' }}>{desc}</p>
+                  </div>
+                )
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* À propos */}
+        <section id="a-propos" className="py-20 px-4" style={{ background: '#0A0A0F' }}>
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+
+              {/* Colonne gauche — texte */}
+              <div>
+                <p className="text-xs font-semibold tracking-widest mb-4" style={{ color: '#F59E0B' }}>
+                  QUI SOMMES-NOUS
+                </p>
+                <h2
+                  className="text-3xl font-black mb-6"
+                  style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", color: '#F0EBE0', letterSpacing: '0.03em' }}
+                >
+                  De chantiers à 1 500 personnes aux outils de gestion de projet IA
+                </h2>
+                <div className="space-y-4 text-sm leading-relaxed" style={{ color: '#C4BAA6' }}>
+                  <p>
+                    Je suis{' '}
+                    <strong style={{ color: '#F0EBE0' }}>Abdallah Ait Essaghir</strong>,
+                    fondateur d&apos;ABEMA AGENCY. Pendant plus de 15 ans, j&apos;ai piloté
+                    des projets parmi les plus complexes au monde — hôtels 5 étoiles
+                    (Ritz Carlton Riyadh, Radisson Blu, Barceló), un technopôle de 610 hectares
+                    au Maroc, des programmes de logements en France. Des équipes jusqu&apos;à
+                    1 500 personnes, des budgets sous pression.
+                  </p>
+                  <p>
+                    Ce que j&apos;ai appris en 15 ans :{' '}
+                    <strong style={{ color: '#F0EBE0' }}>la méthode fait tout.</strong> Un
+                    processus bien pensé, bien exécuté, transforme le chaos en résultat —
+                    quelle que soit l&apos;échelle du projet. C&apos;est exactement ce que
+                    PMBOK 8 formalise.
+                  </p>
+                  <p>
+                    Abema PM est l&apos;outil que j&apos;aurais voulu avoir sur mes chantiers.
+                    Bâti sur PMBOK 8, augmenté par l&apos;IA — pour les artisans, les chefs de
+                    projet certifiés et les dirigeants qui veulent structurer sans complexifier.
+                  </p>
                 </div>
-              ))}
+
+                {/* Stats */}
+                <div className="flex gap-8 mt-8">
+                  {[
+                    { val: '15+', label: 'ans terrain' },
+                    { val: '1 500', label: 'personnes coord.' },
+                    { val: '3', label: 'langues FR/AR/EN' },
+                  ].map(({ val, label }) => (
+                    <div key={label}>
+                      <div className="text-2xl font-black" style={{ fontFamily: "'Big Shoulders Display', sans-serif", color: '#F59E0B' }}>
+                        {val}
+                      </div>
+                      <div className="text-xs mt-1" style={{ color: '#8A8070' }}>{label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Colonne droite — card identité */}
+              <div className="rounded-xl p-6 border" style={{ background: '#0D0D16', borderColor: 'rgba(240,235,224,0.08)' }}>
+                {/* Avatar initiales */}
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center text-xl font-black mb-4"
+                  style={{ background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', color: '#F59E0B', fontFamily: "'Big Shoulders Display', sans-serif" }}
+                >
+                  AA
+                </div>
+
+                <div className="font-black text-lg mb-1" style={{ fontFamily: "'Big Shoulders Display', sans-serif", color: '#F0EBE0' }}>
+                  Abdallah Ait Essaghir
+                </div>
+                <div className="text-sm mb-6" style={{ color: '#8A8070' }}>
+                  Fondateur, ABEMA AGENCY
+                </div>
+
+                {/* Références projets */}
+                <div className="space-y-2 text-xs" style={{ color: '#8A8070' }}>
+                  {[
+                    'Ritz Carlton Riyadh — Hôtel 5 étoiles',
+                    'Radisson Blu & Barceló',
+                    'Technopôle 610 ha — Maroc',
+                    'Programmes logements — France',
+                  ].map((ref) => (
+                    <div key={ref} className="flex items-center gap-2">
+                      <div className="w-1 h-1 rounded-full flex-shrink-0" style={{ background: '#F59E0B' }} />
+                      <span>{ref}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 pt-4 border-t text-xs" style={{ borderColor: 'rgba(240,235,224,0.08)', color: '#8A8070' }}>
+                  <div>ABEMA AGENCY — SIREN 925 242 976</div>
+                  <div>25 Rue de Rouvroy, 62680 Méricourt</div>
+                  <div>Hauts-de-France, France</div>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>

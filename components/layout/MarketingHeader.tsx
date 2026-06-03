@@ -18,6 +18,7 @@ const NAV_LINKS = [
   { href: '/#fonctionnalites', label: 'Fonctionnalités' },
   { href: '/#personas', label: 'Pour qui ?' },
   { href: '/pricing', label: 'Tarifs' },
+  { href: '/#a-propos', label: 'À propos' },
 ]
 
 const NAV_LINK_CLASS =
