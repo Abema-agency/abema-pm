@@ -1,15 +1,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useOnboardingStore } from '@/store/useOnboardingStore'
+import { useOnboardingStore, recommendApproach } from '@/store/useOnboardingStore'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
-import type { UserProfileType } from '@/types/project'
+import type { UserProfileType, ProjectSector } from '@/types/project'
 
 const PROFILES = [
   { value: 'artisan', label: 'Artisan / TPE', description: 'Je gère un petit business avec des projets concrets (chantiers, missions, commandes).' },
@@ -17,17 +16,20 @@ const PROFILES = [
   { value: 'sme_manager', label: 'Dirigeant PME', description: 'Je pilote plusieurs projets stratégiques et ai besoin de visibilité macro.' },
 ] as const
 
-const BLOCKERS = [
-  'Je perds du temps à chercher les infos',
-  'Je ne sais pas où en sont mes projets',
-  'Les risques me surprennent souvent',
-  "Je n'ai pas de méthode structurée",
-  'Mon équipe n\'est pas alignée',
+const SECTORS: { value: ProjectSector; label: string }[] = [
+  { value: 'construction', label: 'Construction' },
+  { value: 'it_software', label: 'IT & Software' },
+  { value: 'marketing_events', label: 'Marketing & Événementiel' },
+  { value: 'rd_innovation', label: 'R&D & Innovation' },
+  { value: 'transformation', label: 'Transformation' },
+  { value: 'product_launch', label: 'Lancement produit' },
+  { value: 'regulatory_public', label: 'Réglementaire & Public' },
+  { value: 'other', label: 'Autre' },
 ]
 
 export default function OnboardingPage() {
   const router = useRouter()
-  const { step, data, nextStep, prevStep, updateData } = useOnboardingStore()
+  const { step, data, nextStep, prevStep, updateData, updateTailoring } = useOnboardingStore()
   const supabase = createClient()
 
   async function handleFinish() {
@@ -43,16 +45,17 @@ export default function OnboardingPage() {
       .eq('id', user.id)
 
     if (data.firstProjectName) {
+      const approach = recommendApproach(data.tailoring)
       const { data: project } = await supabase
         .from('projects')
         .insert({
           owner_id: user.id,
           name: data.firstProjectName,
-          description: data.firstProjectDescription || null,
-          approach: 'hybrid' as const,
+          sector: data.firstProjectSector || null,
+          approach: approach,
           status: 'active' as const,
           success_criteria: [],
-          tailoring_answers: {},
+          tailoring_answers: data.tailoring,
         })
         .select()
         .single()
@@ -73,7 +76,7 @@ export default function OnboardingPage() {
           <h1 className="text-2xl font-bold text-slate-900">
             <span className="text-blue-600">Abema</span> PM
           </h1>
-          <p className="text-slate-500 mt-1">Configuration de votre espace ({step}/5)</p>
+          <p className="text-slate-500 mt-1">Configuration de votre espace ({step}/4)</p>
         </div>
 
         {/* Step 1 — Profile */}
@@ -99,20 +102,23 @@ export default function OnboardingPage() {
           </Card>
         )}
 
-        {/* Step 2 — Main blocker */}
+        {/* Step 2 — Project sector */}
         {step === 2 && (
           <Card>
-            <CardHeader><CardTitle>Votre plus gros frein actuel ?</CardTitle></CardHeader>
+            <CardHeader>
+              <CardTitle>Secteur du projet ?</CardTitle>
+              <p className="text-sm text-slate-500">Cela aide à adapter les recommandations.</p>
+            </CardHeader>
             <CardContent className="space-y-3">
-              {BLOCKERS.map((b) => (
+              {SECTORS.map((s) => (
                 <button
-                  key={b}
-                  onClick={() => { updateData({ mainBlocker: b }); nextStep() }}
+                  key={s.value}
+                  onClick={() => { updateData({ firstProjectSector: s.value }); nextStep() }}
                   className={`w-full text-left px-4 py-3 rounded-lg border text-sm transition-colors ${
-                    data.mainBlocker === b ? 'border-blue-500 bg-blue-50 text-blue-800' : 'border-slate-200 hover:border-slate-300 text-slate-700'
+                    data.firstProjectSector === s.value ? 'border-blue-500 bg-blue-50 text-blue-800' : 'border-slate-200 hover:border-slate-300 text-slate-700'
                   }`}
                 >
-                  {b}
+                  {s.label}
                 </button>
               ))}
               <Button variant="ghost" size="sm" className="w-full" onClick={nextStep}>Passer cette étape</Button>
@@ -120,28 +126,8 @@ export default function OnboardingPage() {
           </Card>
         )}
 
-        {/* Step 3 — Project count */}
+        {/* Step 3 — Project name */}
         {step === 3 && (
-          <Card>
-            <CardHeader><CardTitle>Combien de projets gérez-vous en parallèle ?</CardTitle></CardHeader>
-            <CardContent className="space-y-3">
-              {[['1', 1], ['2-3', 2], ['4-10', 5], ['10+', 15]].map(([label, val]) => (
-                <button
-                  key={label}
-                  onClick={() => { updateData({ projectCount: Number(val) }); nextStep() }}
-                  className={`w-full text-left px-4 py-3 rounded-lg border text-sm transition-colors ${
-                    data.projectCount === Number(val) ? 'border-blue-500 bg-blue-50 text-blue-800' : 'border-slate-200 hover:border-slate-300 text-slate-700'
-                  }`}
-                >
-                  {label} projet{Number(val) > 1 ? 's' : ''}
-                </button>
-              ))}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Step 4 — First project name */}
-        {step === 4 && (
           <Card>
             <CardHeader>
               <CardTitle>Créer votre premier projet</CardTitle>
@@ -157,16 +143,6 @@ export default function OnboardingPage() {
                   placeholder="Ex: Rénovation cuisine client Dubois"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="projectDesc">Description courte (optionnel)</Label>
-                <Textarea
-                  id="projectDesc"
-                  value={data.firstProjectDescription}
-                  onChange={(e) => updateData({ firstProjectDescription: e.target.value })}
-                  rows={2}
-                  placeholder="Contexte rapide..."
-                />
-              </div>
               <div className="flex gap-2 pt-2">
                 <Button variant="outline" onClick={prevStep}><ChevronLeft className="w-4 h-4 mr-1" />Retour</Button>
                 <Button className="flex-1" onClick={nextStep} disabled={!data.firstProjectName.trim()}>
@@ -180,26 +156,78 @@ export default function OnboardingPage() {
           </Card>
         )}
 
-        {/* Step 5 — Summary */}
-        {step === 5 && (
+        {/* Step 4 — PMBOK tailoring */}
+        {step === 4 && (
           <Card>
-            <CardHeader><CardTitle>Tout est prêt !</CardTitle></CardHeader>
-            <CardContent className="space-y-4">
-              <div className="bg-slate-50 rounded-lg p-4 space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-slate-500">Profil</span>
-                  <span className="font-medium">{PROFILES.find((p) => p.value === data.profileType)?.label ?? data.profileType}</span>
+            <CardHeader>
+              <CardTitle>Adaptez à votre contexte</CardTitle>
+              <p className="text-sm text-slate-500">Cela aide à choisir la meilleure approche (Prédictive/Agile/Hybride).</p>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Scope defined */}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold">Le périmètre est-il clairement défini ?</Label>
+                <div className="space-y-2">
+                  {['fixed', 'partial', 'evolving'].map((val) => (
+                    <button
+                      key={val}
+                      onClick={() => updateTailoring({ scopeDefined: val as any })}
+                      className={`w-full text-left px-3 py-2 rounded-lg border text-sm transition-colors ${
+                        data.tailoring.scopeDefined === val ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      {val === 'fixed' && 'Oui, le périmètre est fixé'}
+                      {val === 'partial' && 'Partiellement défini'}
+                      {val === 'evolving' && 'Non, il évolue régulièrement'}
+                    </button>
+                  ))}
                 </div>
-                {data.firstProjectName && (
-                  <div className="flex justify-between">
-                    <span className="text-slate-500">Premier projet</span>
-                    <span className="font-medium">{data.firstProjectName}</span>
-                  </div>
-                )}
               </div>
-              <Button className="w-full" onClick={handleFinish}>
-                {data.firstProjectName ? 'Créer mon projet et commencer' : 'Accéder au dashboard'}
-              </Button>
+
+              {/* Budget */}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold">Avez-vous un budget fixé ?</Label>
+                <div className="space-y-2">
+                  {['yes', 'no'].map((val) => (
+                    <button
+                      key={val}
+                      onClick={() => updateTailoring({ fixedBudget: val as any })}
+                      className={`w-full text-left px-3 py-2 rounded-lg border text-sm transition-colors ${
+                        data.tailoring.fixedBudget === val ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      {val === 'yes' ? 'Oui' : 'Non, flexible'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Delivery frequency */}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold">Quelle est la fréquence de livraison ?</Label>
+                <div className="space-y-2">
+                  {['milestones', 'continuous', 'both'].map((val) => (
+                    <button
+                      key={val}
+                      onClick={() => updateTailoring({ deliveryFrequency: val as any })}
+                      className={`w-full text-left px-3 py-2 rounded-lg border text-sm transition-colors ${
+                        data.tailoring.deliveryFrequency === val ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      {val === 'milestones' && 'Par jalons'}
+                      {val === 'continuous' && 'Continu (itérations)'}
+                      {val === 'both' && 'Les deux'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex gap-2 pt-2">
+                <Button variant="outline" onClick={prevStep}><ChevronLeft className="w-4 h-4 mr-1" />Retour</Button>
+                <Button className="flex-1" onClick={handleFinish}>
+                  Créer le projet <ChevronRight className="w-4 h-4 ml-1" />
+                </Button>
+              </div>
             </CardContent>
           </Card>
         )}
