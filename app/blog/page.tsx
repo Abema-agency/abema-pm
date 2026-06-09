@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllPosts } from '@/lib/blog'
+import { MarketingHeader } from '@/components/layout/MarketingHeader'
 
 export const revalidate = 3600
 
@@ -14,6 +15,13 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen" style={{ background: '#0A0A0F', color: '#C4BAA6' }}>
+      <MarketingHeader />
+      <div className="max-w-4xl mx-auto px-4 pt-6 pb-0">
+        <a href="/" className="inline-flex items-center gap-2 text-sm transition-colors hover:text-white"
+          style={{ color: '#8A8070' }}>
+          ← Retour à l&apos;accueil
+        </a>
+      </div>
       <section className="py-20 px-4" style={{ background: '#0D0D16', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold mb-6 border"

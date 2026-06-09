@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { CheckCircle, Bot, BarChart3, Shield, Zap, Users, AlertTriangle } from 'lucide-react'
+import { CheckCircle, Bot, BarChart3, Shield, Zap, Users, AlertTriangle, Wrench, Building2 } from 'lucide-react'
 import { MarketingHeader } from '@/components/layout/MarketingHeader'
 import { getLatestPosts } from '@/lib/blog'
 import { DemoSection } from '@/components/marketing/DemoSection'
@@ -133,7 +133,7 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-6">
               {[
                 {
-                  icon: '🔧',
+                  icon: <Wrench className="w-8 h-8 mb-3" style={{ color: '#F59E0B' }} aria-hidden="true" />,
                   title: 'Artisan / TPE',
                   subtitle: 'Karim, plombier',
                   borderColor: '#F59E0B',
@@ -145,7 +145,7 @@ export default function Home() {
                   ],
                 },
                 {
-                  icon: '📊',
+                  icon: <BarChart3 className="w-8 h-8 mb-3" style={{ color: '#3B82F6' }} aria-hidden="true" />,
                   title: 'Chef de projet',
                   subtitle: 'Sophie, PM certifiée',
                   borderColor: '#3B82F6',
@@ -157,7 +157,7 @@ export default function Home() {
                   ],
                 },
                 {
-                  icon: '🏢',
+                  icon: <Building2 className="w-8 h-8 mb-3" style={{ color: '#22c55e' }} aria-hidden="true" />,
                   title: 'Dirigeant PME',
                   subtitle: 'Jean-Marc, DG',
                   borderColor: '#22c55e',
@@ -170,7 +170,7 @@ export default function Home() {
                 },
               ].map((persona, i) => (
                 <div key={i} className="rounded-xl p-6 border-t-4" style={{ background: '#0D0D16', borderTopColor: persona.borderColor, borderLeft: '1px solid rgba(240,235,224,0.06)', borderRight: '1px solid rgba(240,235,224,0.06)', borderBottom: '1px solid rgba(240,235,224,0.06)' }}>
-                  <div className="text-3xl mb-3">{persona.icon}</div>
+                  <div>{persona.icon}</div>
                   <h3 className="font-black text-lg mb-1" style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', sans-serif", color: '#F0EBE0', letterSpacing: '0.03em' }}>{persona.title}</h3>
                   <p className="text-sm mb-4" style={{ color: '#8A8070' }}>{persona.subtitle}</p>
                   <ul className="space-y-2">

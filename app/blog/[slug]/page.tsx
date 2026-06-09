@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getAllPosts, getPostBySlug } from '@/lib/blog'
 import { Callout } from '@/components/blog/Callout'
+import { MarketingHeader } from '@/components/layout/MarketingHeader'
 
 export const revalidate = 3600
 
@@ -40,6 +41,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="min-h-screen" style={{ background: '#0A0A0F', color: '#C4BAA6' }}>
+      <MarketingHeader />
       <div className="px-4 pt-8 pb-4 max-w-3xl mx-auto">
         <div className="flex items-center gap-2 text-xs" style={{ color: '#8A8070' }}>
           <Link href="/" className="hover:text-white transition-colors">Accueil</Link>

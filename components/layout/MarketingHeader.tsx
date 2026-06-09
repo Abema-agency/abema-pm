@@ -17,6 +17,7 @@ function LogoMark() {
 const NAV_LINKS = [
   { href: '/#fonctionnalites', label: 'Fonctionnalités' },
   { href: '/#personas', label: 'Pour qui ?' },
+  { href: '/blog', label: 'Blog' },
   { href: '/pricing', label: 'Tarifs' },
   { href: '/#a-propos', label: 'À propos' },
 ]
