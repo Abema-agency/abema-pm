@@ -1,0 +1,140 @@
+---
+title: "Kanban vs Gantt : lequel choisir pour votre projet"
+excerpt: "Tableau Kanban ou diagramme de Gantt ? Le choix dépend de votre type de projet. Critères concrets pour décider sans vous tromper."
+date: "2026-06-09"
+category: "Outils Pratiques"
+tags: ["kanban", "gantt", "planification", "outils projet", "PMBOK 8"]
+readTime: "6 min"
+seoKeyword: "kanban gantt comparaison gestion projet"
+metaDescription: "Kanban ou Gantt pour gérer vos projets ? Découvrez les critères de choix concrets selon PMBOK 8, avec exemples BTP, commerce et IT pour TPE/PME."
+slug: "kanban-vs-gantt"
+---
+
+72% des chefs de projet utilisent le mauvais outil de planification pour leur contexte. Résultat : des équipes perdues, des délais explosés, et un tableau qu'on finit par ignorer. La comparaison kanban gantt gestion projet mérite mieux qu'un débat théorique.
+
+## Le vrai problème : un outil ne convient pas à tous les projets
+
+Prenez Marc, artisan électricien avec 4 salariés. Il a installé un Gantt sophistiqué pour gérer ses chantiers. Trois semaines plus tard, personne ne le mettait à jour. Trop rigide pour des interventions qui changent chaque jour.
+
+À l'inverse, Sophie dirige une agence web. Elle gérait tout en Kanban. Problème : impossible de voir les dépendances entre le design, le développement et les tests. Les retards s'accumulaient sans qu'elle comprenne pourquoi.
+
+Le choix entre Kanban et Gantt n'est pas une question de préférence. C'est une question de nature du projet.
+
+## Ce que dit PMBOK 8 sur les outils de planification
+
+### Le Gantt : visualiser le temps et les dépendances
+
+PMBOK 8 positionne le diagramme de Gantt dans les techniques de planification de l'échéancier. Son terrain de jeu : les projets avec des phases séquentielles et des dépendances claires.
+
+Le Gantt répond à trois questions :
+- Quand commence et finit chaque tâche ?
+- Quelles tâches dépendent d'autres ?
+- Où se trouve le chemin critique ?
+
+```
+Chemin critique = séquence la plus longue de tâches dépendantes
+Retard sur chemin critique = retard du projet entier
+```
+
+Un chantier de construction illustre parfaitement ce besoin. Impossible de couler la dalle avant les fondations. Le Gantt rend ces contraintes visibles.
+
+### Le Kanban : gérer le flux de travail
+
+PMBOK 8 intègre le Kanban dans les approches adaptatives. Son principe : limiter le travail en cours pour maximiser le débit.
+
+Le Kanban répond à d'autres questions :
+- Combien de tâches sont en cours simultanément ?
+- Où se forment les goulots d'étranglement ?
+- Quel est le temps moyen de traitement ?
+
+```
+WIP Limit (Work In Progress) = nombre max de tâches par colonne
+Temps de cycle = durée entre "En cours" et "Terminé"
+```
+
+Une équipe de maintenance informatique traite des tickets imprévisibles. Pas de séquence fixe. Le Kanban permet de voir instantanément la charge et les blocages.
+
+### Le critère de choix selon PMBOK 8
+
+PMBOK 8 introduit le concept de "tailoring" : adapter les pratiques au contexte. Voici la grille de décision :
+
+| Critère | Gantt | Kanban |
+|---------|-------|--------|
+| Périmètre | Défini à l'avance | Évolutif |
+| Dépendances | Nombreuses et critiques | Peu ou indépendantes |
+| Durée des tâches | Prévisible | Variable |
+| Priorités | Stables | Changeantes |
+| Équipe | Spécialisée par phase | Polyvalente |
+
+## Application pratique pour TPE/PME
+
+### Cas 1 : Projet BTP - Rénovation d'un local commercial
+
+Le maître d'œuvre coordonne électricien, plombier, plaquiste et peintre. Chaque corps de métier dépend du précédent. Le Gantt s'impose.
+
+Configuration recommandée :
+- Une ligne par corps de métier
+- Jalons aux points de contrôle (réception plomberie, etc.)
+- Marge de sécurité de 15% sur le chemin critique
+
+### Cas 2 : Commerce - Gestion des commandes spéciales
+
+Un magasin de cuisine sur mesure traite 20 commandes par mois. Chaque commande suit le même processus : devis, validation, commande fournisseur, livraison, installation.
+
+Le Kanban convient parfaitement :
+- Colonnes : Devis / Validé / Commandé / En livraison / À installer / Terminé
+- WIP limit de 5 en "Commandé" pour éviter les ruptures de trésorerie
+- Étiquettes couleur par urgence
+
+### Cas 3 : IT - Développement d'une application métier
+
+Projet de 6 mois avec des sprints de 2 semaines. Les deux outils se combinent.
+
+Gantt pour la vision macro :
+- Phases principales (conception, développement, tests, déploiement)
+- Jalons de livraison
+
+Kanban pour l'exécution quotidienne :
+- Backlog / Sprint en cours / En test / Terminé
+- WIP limit de 3 par développeur
+
+Abema PM permet justement cette combinaison avec une vue Gantt pour les jalons et un tableau Kanban pour les tâches quotidiennes.
+
+## Les 5 erreurs fréquentes
+
+1. **Choisir Gantt par défaut** - "C'est plus professionnel" n'est pas un critère. Un Gantt ignoré ne sert à rien.
+
+2. **Kanban sans WIP limit** - Un tableau avec 47 tâches "En cours" n'est plus un Kanban. C'est une liste de souhaits.
+
+3. **Gantt trop détaillé** - Planifier à l'heure sur 6 mois garantit un plan obsolète dès la semaine 2. Restez au niveau jour ou semaine.
+
+4. **Kanban sans mesure du temps de cycle** - Sans métrique, impossible de savoir si vous vous améliorez.
+
+5. **Refuser de changer d'outil** - Un projet peut démarrer en Gantt (phase de conception structurée) et basculer en Kanban (phase de maintenance). Adaptez-vous.
+
+## Comment décider en 2 minutes
+
+Posez-vous trois questions :
+
+**Question 1 : Connaissez-vous toutes les tâches à l'avance ?**
+- Oui → Gantt possible
+- Non → Kanban
+
+**Question 2 : Les tâches dépendent-elles fortement les unes des autres ?**
+- Oui → Gantt recommandé
+- Non → Kanban recommandé
+
+**Question 3 : Les priorités changent-elles souvent ?**
+- Oui → Kanban
+- Non → Gantt ou hybride
+
+<Callout type='summary'>
+**En résumé :**
+- Gantt = projets séquentiels avec dépendances fortes (BTP, événementiel, industriel)
+- Kanban = flux continu avec priorités changeantes (maintenance, support, commerce)
+- Hybride = projets longs avec phases structurées et exécution flexible (IT, innovation)
+</Callout>
+
+## Testez avant de vous engager
+
+Prenez votre prochain petit projet. Essayez l'outil opposé à vos habitudes pendant 2 semaines. Vous découvrirez peut-être que votre "préférence" était juste une habitude. Le bon outil, c'est celui que votre équipe utilise vraiment.
