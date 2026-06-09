@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { CheckCircle, Bot, BarChart3, Shield, Zap, Users, AlertTriangle } from 'lucide-react'
 import { MarketingHeader } from '@/components/layout/MarketingHeader'
+import { getLatestPosts } from '@/lib/blog'
 
 export const metadata = {
   title: 'Abema PM — Gestion de projet PMBOK 8 avec IA',
@@ -9,6 +10,7 @@ export const metadata = {
 }
 
 export default function Home() {
+  const latestPosts = getLatestPosts(3)
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#0A0A0F', color: '#C4BAA6', fontFamily: 'Mulish, sans-serif' }}>
 
@@ -161,6 +163,64 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Blog teaser */}
+        <section className="py-20 px-4" style={{ background: '#0A0A0F' }}>
+          <div className="max-w-5xl mx-auto">
+            <div className="flex items-end justify-between mb-10">
+              <div>
+                <h2 className="text-3xl font-black"
+                  style={{ fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif", color: '#F0EBE0', letterSpacing: '0.03em' }}>
+                  RESSOURCES PMBOK 8
+                </h2>
+                <p className="mt-2" style={{ color: '#8A8070' }}>
+                  Guides pratiques pour chefs de projet et dirigeants.
+                </p>
+              </div>
+              <Link href="/blog" className="text-sm font-semibold hover:text-white transition-colors" style={{ color: '#F59E0B' }}>
+                Tous les articles →
+              </Link>
+            </div>
+
+            {latestPosts.length === 0 ? (
+              <div className="grid md:grid-cols-3 gap-5">
+                {['PMBOK 8 vs PMBOK 6 : ce qui change vraiment', 'SPI, CPI, EVM : les indicateurs clés', 'Matrice P×I : gérer les risques'].map((title, i) => (
+                  <div key={i} className="p-5 rounded-xl" style={{ background: '#0D0D16', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <div className="h-3 rounded mb-3" style={{ background: 'rgba(245,158,11,0.15)', width: '60%' }} />
+                    <div className="text-sm font-bold mb-2" style={{ color: '#F0EBE0' }}>{title}</div>
+                    <div className="h-2 rounded mb-1" style={{ background: 'rgba(255,255,255,0.05)', width: '90%' }} />
+                    <div className="h-2 rounded" style={{ background: 'rgba(255,255,255,0.05)', width: '70%' }} />
+                    <div className="mt-4 text-xs" style={{ color: '#F59E0B' }}>À venir →</div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-3 gap-5">
+                {latestPosts.map(post => (
+                  <Link key={post.slug} href={`/blog/${post.slug}`} className="block group">
+                    <div className="p-5 rounded-xl transition-all h-full"
+                      style={{ background: '#0D0D16', border: '1px solid rgba(255,255,255,0.06)' }}>
+                      <span className="text-xs font-semibold px-2 py-1 rounded-full mb-3 inline-block"
+                        style={{ background: 'rgba(245,158,11,0.12)', color: '#F59E0B' }}>
+                        {post.category}
+                      </span>
+                      <h3 className="text-sm font-bold mb-2 group-hover:text-amber-400 transition-colors"
+                        style={{ fontFamily: "'Big Shoulders Display', sans-serif", color: '#F0EBE0' }}>
+                        {post.title}
+                      </h3>
+                      <p className="text-xs leading-relaxed line-clamp-2" style={{ color: '#8A8070' }}>
+                        {post.excerpt}
+                      </p>
+                      <div className="mt-4 text-xs font-semibold" style={{ color: '#F59E0B' }}>
+                        Lire →
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
