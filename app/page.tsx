@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { CheckCircle, Bot, BarChart3, Shield, Zap, Users, AlertTriangle } from 'lucide-react'
 import { MarketingHeader } from '@/components/layout/MarketingHeader'
 import { getLatestPosts } from '@/lib/blog'
+import { DemoSection } from '@/components/marketing/DemoSection'
 
 export const metadata = {
   title: 'Abema PM — Gestion de projet PMBOK 8 avec IA',
@@ -16,7 +17,7 @@ export default function Home() {
 
       <MarketingHeader />
 
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
 
         {/* Hero */}
         <section className="relative py-28 px-4 overflow-hidden" style={{ background: '#0A0A0F', minHeight: '80vh', display: 'flex', alignItems: 'center' }}>
@@ -100,6 +101,26 @@ export default function Home() {
                 </tbody>
               </table>
             </div>
+          </div>
+        </section>
+
+        {/* Démo interactive */}
+        <section className="py-20 px-4" style={{ background: "#0A0A0F" }}>
+          <div className="max-w-5xl mx-auto">
+            <h2
+              className="text-3xl font-black text-center mb-3"
+              style={{
+                fontFamily: "'Big Shoulders Display', 'Arial Narrow', Impact, sans-serif",
+                color: "#F0EBE0",
+                letterSpacing: "0.03em",
+              }}
+            >
+              LE PRODUIT EN ACTION
+            </h2>
+            <p className="text-center mb-10" style={{ color: "#8A8070" }}>
+              Tailoring engine, dashboard KPIs, registre risques, copilote IA — en 4 étapes.
+            </p>
+            <DemoSection />
           </div>
         </section>
 
@@ -392,7 +413,7 @@ export default function Home() {
             — Gestion de projet PMBOK 8 avec IA
           </p>
           <p className="mb-1">Hauts-de-France · France</p>
-          <p className="mb-4">© {new Date().getFullYear()} Abema Agency · <a href="mailto:agencyabema@gmail.com" className="hover:text-white transition-colors" style={{ color: '#8A8070' }}>agencyabema@gmail.com</a></p>
+          <p className="mb-4">© {new Date().getFullYear()} Abema Agency · <a href="mailto:contact@abemaagency.com" className="hover:text-white transition-colors" style={{ color: '#8A8070' }}>contact@abemaagency.com</a></p>
           <div className="flex justify-center gap-4 text-xs" style={{ color: '#8A8070' }}>
             <Link href="/legal/mentions-legales" className="hover:text-white transition-colors">Mentions légales</Link>
             <Link href="/legal/politique-de-confidentialite" className="hover:text-white transition-colors">Confidentialité</Link>

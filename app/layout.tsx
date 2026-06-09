@@ -48,7 +48,29 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${bigShoulders.variable} ${mulish.variable} h-full antialiased`}>
-      <body className="h-full font-sans">{children}</body>
+      <body className="h-full font-sans">
+        {/* Skip link — accessibilité WCAG AA */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only"
+          style={{
+            position: "absolute",
+            top: "8px",
+            left: "8px",
+            zIndex: 9999,
+            background: "#F59E0B",
+            color: "#0A0A0F",
+            padding: "8px 16px",
+            borderRadius: "6px",
+            fontWeight: 700,
+            fontSize: "14px",
+            textDecoration: "none",
+          }}
+        >
+          Aller au contenu principal
+        </a>
+        {children}
+      </body>
     </html>
   )
 }
