@@ -4,6 +4,7 @@ import { CheckCircle, Bot, BarChart3, Shield, Zap, Users, AlertTriangle, Wrench,
 import { MarketingHeader } from '@/components/layout/MarketingHeader'
 import { getLatestPosts } from '@/lib/blog'
 import { DemoSection } from '@/components/marketing/DemoSection'
+import { AgentsSection } from '@/components/marketing/AgentsSection'
 
 export const metadata = {
   title: 'Abema PM — Gestion de projet PMBOK 8 avec IA',
@@ -282,6 +283,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Agents IA */}
+        <AgentsSection />
 
         {/* À propos */}
         <section id="a-propos" className="py-20 px-4" style={{ background: '#0A0A0F' }}>
